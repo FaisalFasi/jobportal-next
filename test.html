@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="module">
+      import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+      const supabaseUrl = "https://eequjlhcvbgvssriesof.supabase.co";
+
+      const supabaseKey =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVlcXVqbGhjdmJndnNzcmllc29mIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTg2Mjc0NTcsImV4cCI6MjAxNDIwMzQ1N30.vYK4TgiIKVwVh2FX1fqMMk1oJB1Znm-tEqhMiWHoanc";
+      const supabase = createClient(supabaseUrl, supabaseKey);
+
+      console.log("Supabase Instance: ", supabase);
+
+      async function fetchData() {
+        let { data: jobs, error } = await supabase.from("jobs").select("*");
+        console.log(error);
+        console.log(jobs);
+      }
+      //   fetchData();
+
+      async function PostData() {
+        const { data, error } = await supabase
+          .from("jobs")
+          .insert([{ some_column: "someValue", other_column: "otherValue" }])
+          .select();
+      }
+
+      services / auth.js;
+      login / logout / register;
+      services / jobs.js;
+      getAllJobs / getJobById / createJob / updateJob / deleteJob;
+      services / companies.js;
+      getAllCompanies /
+        getCompanyById /
+        createCompany /
+        updateCompany /
+        deleteCompany;
+      services / users.js;
+      getUserById / updateUser / deleteUser / getProfile;
+      services / messages;
+    </script>
+  </body>
+</html>

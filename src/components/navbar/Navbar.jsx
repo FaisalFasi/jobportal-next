@@ -43,7 +43,7 @@ const navbarLinks = [
 ];
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isNavbarMenuOpen, setIsnavbarMenuOpen] = useState(false);
 
   const openNavbarMenu = () => {
@@ -53,26 +53,33 @@ const Navbar = () => {
   const closeNavbarMenu = () => {
     setIsnavbarMenuOpen(false);
   };
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+  const handleSignUp = () => {};
 
   return (
     <div>
-      <div className="fixed w-full flex justify-between  items-center top-0 px-10 py-8 bg-blue-300 ">
-        <div className="w-full flex justify-between ">
+      <div className="fixed w-full flex justify-between  items-center top-0 px-4 py-8 bg-blue-300 ">
+        <div className="w-full flex justify-between items-center ">
           <div>FR-Work</div>
           {isLoggedIn && (
             <button
-              className=" absolute top-0 right-0 px-10 py-8 md:hidden z-[100]"
+              className=" absolute top-0 right-0 px-4 pt-7 md:hidden z-[100] text-2xl"
               onClick={openNavbarMenu}
             >
-              Humburger
+              {isNavbarMenuOpen ? "x" : "☰"}
             </button>
           )}
         </div>
 
         {isLoggedIn ? (
           <ul
-            className={`absolute md:static w-screen md:w-full h-screen md:h-full bg-red-400 md:bg-blue-300 opacity-80  md:opacity-100 z-50 md:z-10 left-0 py-20 md:py-0  flex-col flex md:flex-row md:justify-center items-center gap-6 whitespace-nowrap  ${
-              isNavbarMenuOpen ? "top-0" : "top-[-600px]"
+            className={`absolute md:static w-screen md:w-full h-screen md:h-full bg-red-400 md:bg-blue-300 opacity-80  md:opacity-100 z-50 md:z-10 left-0 py-20 md:py-0  flex-col flex md:flex-row md:justify-end items-center gap-6 whitespace-nowrap  ${
+              isNavbarMenuOpen ? "top-0" : "top-[-1000px]"
             }`}
           >
             {navbarLinks.map((link) => {
@@ -85,8 +92,13 @@ const Navbar = () => {
           </ul>
         ) : (
           <div className="flex justify-end gap-8 w-full">
-            <button>Login</button>
-            <button>Sign Up</button>
+            <button>
+              {" "}
+              <Link href={"/login"}>Log In</Link>{" "}
+            </button>
+            <button>
+              <Link href={"/signup"}>Sign Up</Link>{" "}
+            </button>
           </div>
         )}
       </div>
