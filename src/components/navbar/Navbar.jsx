@@ -30,27 +30,61 @@ const navbarLinks = [
     title: "Setting",
     url: "/setting",
   },
+  {
+    id: 6,
+    title: "Dashboard",
+    url: "/dashboard",
+  },
+  {
+    id: 7,
+    title: "Logout",
+    url: "/logout",
+  },
 ];
 
 const Navbar = () => {
-  const [isNavbarOpen, setIsnavbarOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isNavbarMenuOpen, setIsnavbarMenuOpen] = useState(false);
+
+  const openNavbarMenu = () => {
+    setIsnavbarMenuOpen(!isNavbarMenuOpen);
+    console.log(isNavbarMenuOpen);
+  };
+  const closeNavbarMenu = () => {
+    setIsnavbarMenuOpen(false);
+  };
 
   return (
-    <div className="fixed w-full h-20 bg-blue-300  ">
-      <div className="flex justify-between items-center h-full mx-16">
-        <div>FR-Work</div>
-        {isNavbarOpen ? (
-          <div className="flex gap-2 ">
+    <div>
+      <div className="fixed w-full flex justify-between  items-center top-0 px-10 py-8 bg-blue-300 ">
+        <div className="w-full flex justify-between ">
+          <div>FR-Work</div>
+          {isLoggedIn && (
+            <button
+              className=" absolute top-0 right-0 px-10 py-8 md:hidden z-[100]"
+              onClick={openNavbarMenu}
+            >
+              Humburger
+            </button>
+          )}
+        </div>
+
+        {isLoggedIn ? (
+          <ul
+            className={`absolute md:static w-screen md:w-full h-screen md:h-full bg-red-400 md:bg-blue-300 opacity-80  md:opacity-100 z-50 md:z-10 left-0 py-20 md:py-0  flex-col flex md:flex-row md:justify-center items-center gap-6 whitespace-nowrap  ${
+              isNavbarMenuOpen ? "top-0" : "top-[-600px]"
+            }`}
+          >
             {navbarLinks.map((link) => {
               return (
-                <Link key={link.id} href={link.url}>
-                  {link.title}
-                </Link>
+                <li key={link.id}>
+                  <Link href={link.url}>{link.title}</Link>
+                </li>
               );
             })}
-          </div>
+          </ul>
         ) : (
-          <div className="flex gap-8">
+          <div className="flex justify-end gap-8 w-full">
             <button>Login</button>
             <button>Sign Up</button>
           </div>
