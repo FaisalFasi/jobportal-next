@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Navbar />
-        {children}
+        <div className="pt-[88px]">{children}</div>
         <Footer />
       </body>
     </html>

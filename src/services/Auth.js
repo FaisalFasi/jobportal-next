@@ -1,7 +1,10 @@
 // supabase auth function / auth0 / sql queries for profile /
 
 import { createClient } from "@supabase/supabase-js";
+import dotenv from "dotenv";
+dotenv.config();
 
+console.log(process.env.SUPABASE_URL);
 const supabaseUrl = "https://eequjlhcvbgvssriesof.supabase.co";
 
 const supabaseKey =
