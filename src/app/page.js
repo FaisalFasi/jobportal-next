@@ -11,23 +11,21 @@ export default function Home() {
   );
 }
 
-{
-  /* <input
-type="text"
-placeholder="email"
-name="email"
-//on focus email auto fill
-autoComplete="email"
-value={userEmail}
-onChange={(e) => setUserEmail(e.target.value)}
-/>
-<input
-type="password"
-placeholder="password"
-value={password}
-onChange={(e) => setPassword(e.target.value)}
-/>
-<button onClick={() => registerJobSeeker(userEmail, password)}>
-signup
-</button> */
-}
+//   <input
+// type="text"
+// placeholder="email"
+// name="email"
+// //on focus email auto fill
+// autoComplete="email"
+// value={userEmail}
+// onChange={(e) => setUserEmail(e.target.value)}
+// />
+// <input
+// type="password"
+// placeholder="password"
+// value={password}
+// onChange={(e) => setPassword(e.target.value)}
+// />
+// <button onClick={() => registerJobSeeker(userEmail, password)}>
+// signup
+// </button>
