@@ -5,8 +5,19 @@ export default function Home() {
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>FR JOB PORTAL </h1>
+    <main>
+      <div className="w-full h-full flex flex-col py-10">
+        <div>
+          <div>
+            <h1 className="text-center font-bold text-2xl">
+              Welcome to FR-JOB PORTAL{" "}
+            </h1>
+          </div>
+          <div>
+            <h1 className="text-center font-bold text-2xl"> Jobs</h1>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

@@ -1,13 +1,7 @@
 "use client";
 // supabase auth function / auth0 / sql queries for profile /
 
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = "https://eequjlhcvbgvssriesof.supabase.co";
-
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVlcXVqbGhjdmJndnNzcmllc29mIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTg2Mjc0NTcsImV4cCI6MjAxNDIwMzQ1N30.vYK4TgiIKVwVh2FX1fqMMk1oJB1Znm-tEqhMiWHoanc";
-const supabase = createClient(supabaseUrl, supabaseKey);
+import supabase from "./Supabase";
 
 async function signUpNewUser(email, password) {
   const { data, error } = await supabase.auth.signUp({
@@ -75,6 +69,12 @@ export async function loginWithEmail(email, password) {
 export async function registerRecruiter(email, password) {
   const res = await signUpNewUser(email, password);
   //... do Recruiter setup stuff...
+
+  const newProfile = supabase.from("profiles").insert({
+    user_id: res.data.whatever.session.whatever.user.id,
+    role: "recruiter",
+    avatar_url: user.user_metadata.avatar_url, // if something comes from the OAuth provider(like github), it will be in user_metadata
+  });
   return res;
 }
 
@@ -82,7 +82,12 @@ export async function registerRecruiter(email, password) {
 export async function registerJobSeeker(email, password) {
   const res = await signUpNewUser(email, password);
   console.log(res.email, res.password);
-  //... do JobSeeker setup stuff...
+
+  const newProfile = supabase.from("profiles").insert({
+    user_id: res.data.whatever.session.whatever.user.id,
+    role: "jobseeker",
+    avatar_url: user.user_metadata.avatar_url, // if something comes from the OAuth provider(like github), it will be in user_metadata
+  });
   return res;
 }
 

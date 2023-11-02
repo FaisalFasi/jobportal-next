@@ -1,0 +1,15 @@
+insert into jobs (title, description, recruiter_id, salary, location, remote_possible, language_required) values ('title1', 'description1', 1, 1000, 'location1', true, 'language_required1');
+insert into jobs (title, description, recruiter_id, salary, location, remote_possible, language_required) values ('title2', 'description2', 2, 2000, 'location2', true, 'language_required2');
+insert into jobs (title, description, recruiter_id, salary, location, remote_possible, language_required) values ('title3', 'description3', 3, 3000, 'location3', true, 'language_required3');
+
+
+insert into conversations (user1_id, user2_id) values (1111, 3333);
+insert into conversations (user1_id, user2_id) values (2222, 3333);
+
+
+insert into messages (user_id, conversation_id, message_content) values (1111, 1, 'hi there from user 1' );
+insert into messages (user_id, conversation_id, message_content) values (2222, 2, 'hi there from user 2' );
+
+
+
+insert into applications (user_id, job_id, status) values (1111, 1, 'pending');

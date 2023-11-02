@@ -52,13 +52,15 @@ const Navbar = () => {
 
   const handleLogOut = async () => {
     logout();
-    router.push("/login");
+    if (session) router.push("/dashboard");
+    else router.push("/");
   };
 
   useEffect(() => {
     setIsnavbarMenuOpen(false);
     console.log(isNavbarMenuOpen);
   }, []);
+
   return (
     <div>
       <div className="fixed w-full flex justify-between  items-center top-0 px-4 py-8 bg-blue-300 ">
