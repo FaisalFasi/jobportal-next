@@ -10,7 +10,7 @@ export default function Home() {
         <div>
           <div>
             <h1 className="text-center font-bold text-2xl">
-              Welcome to FR-JOB PORTAL{" "}
+              Welcome to FR-JOB PORTAL
             </h1>
           </div>
           <div>
