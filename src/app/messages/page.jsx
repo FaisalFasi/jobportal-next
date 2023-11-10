@@ -3,13 +3,14 @@ import React, { useEffect } from "react";
 import { getAllMyConversations } from "@/services/Messages";
 
 const page = () => {
-  useEffect(() => {
-    const getConversations = async () => {
-      const res = await getAllMyConversations();
-      console.log("res: ", res);
-    };
-    getConversations();
-  }, []);
+  // useEffect(() => {
+  //   const getConversations = async () => {
+  //     const { data, error } = await getAllMyConversations();
+  //     console.log("res: ", data, error);
+  //   };
+  //   // getConversations();
+  // }, []);
+
   return (
     <div className="w-full min-h-screen bg-gray-100 p-8 ">
       <div className="">

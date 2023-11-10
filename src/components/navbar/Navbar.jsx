@@ -66,7 +66,7 @@ const Navbar = () => {
       <div className="fixed w-full flex justify-between  items-center top-0 px-4 py-8 bg-blue-300 ">
         <div className="w-full flex justify-between items-center ">
           <div>
-            <Link href={"/"}>FR-Work </Link>{" "}
+            <Link href={"/"}>FR-Portal </Link>{" "}
           </div>
           {session && (
             <button
@@ -87,7 +87,7 @@ const Navbar = () => {
             {user.email}
             {navbarLinks.map((link) => {
               return (
-                <li key={link.id}>
+                <li key={link.id} onClick={() => setIsnavbarMenuOpen(false)}>
                   <Link href={link.url}>{link.title}</Link>
                 </li>
               );

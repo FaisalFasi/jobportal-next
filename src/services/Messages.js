@@ -11,6 +11,6 @@ export const getAllMyConversations = async () => {
     .select("*")
     .eq("user1_id", session?.data?.session?.user?.id)
     .or(`user2_id`, `eq`, session?.data?.session?.user?.id);
-
-  console.log(data, error);
+  return { data, error };
+  // console.log(data, error);
 };
