@@ -1,15 +1,21 @@
 "use client";
 import React, { useEffect } from "react";
-import { getMyProfile } from "@/services/Auth";
+// import { getMyProfile } from "@/services/Auth";
 import { useRouter } from "next/navigation";
+
+import { fetchUserData } from "@/app/GlobalRedux/Features/auth/AuthSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Setup = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state?.auth.isAuthenticated);
 
   useEffect(() => {
     const asyncWrapper = async () => {
-      const profile = await getMyProfile();
-      const logged_in = profile.data?.session;
+      const session = await dispatch(fetchUserData());
+
+      const logged_in = session?.payload?.access_token;
 
       const protected_urls = ["/dashboard", "/profile", "/messages"];
       const not_logged_in_urls = ["/login"];
@@ -23,7 +29,7 @@ const Setup = () => {
       }
     };
     asyncWrapper();
-  }, []);
+  }, [isAuthenticated]);
 
   return <div></div>;
 };

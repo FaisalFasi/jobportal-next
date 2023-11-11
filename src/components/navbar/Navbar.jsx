@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { UserContext } from "../contexts/UserContext";
-import { useContext } from "react";
-import { signOut } from "@/services/Auth";
-import { useRouter } from "next/navigation";
+import React, { use, useEffect, useState } from "react";
 
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchUserData,
+  signOut as logout,
+} from "@/app/GlobalRedux/Features/auth/AuthSlice";
 const navbarLinks = [
   {
     id: 1,
@@ -43,23 +45,43 @@ const navbarLinks = [
 
 const Navbar = () => {
   const router = useRouter();
-  const { user, session, logout } = useContext(UserContext);
+  const dispatch = useDispatch();
+
+  const isAuthenticated = useSelector((state) => state?.auth.isAuthenticated);
+  const user = useSelector((state) => state?.auth.user);
+
   const [isNavbarMenuOpen, setIsnavbarMenuOpen] = useState(false);
+
+  const error = useSelector((state) => state?.auth?.error);
 
   const openNavbarMenu = () => {
     setIsnavbarMenuOpen(!isNavbarMenuOpen);
   };
 
   const handleLogOut = async () => {
-    logout();
-    if (session) router.push("/dashboard");
-    else router.push("/");
+    dispatch(logout());
   };
 
   useEffect(() => {
+    if (error) {
+      console.log("error: ");
+      console.log("error: ", error.message);
+    }
+  }, [error]);
+
+  useEffect(() => {
     setIsnavbarMenuOpen(false);
-    console.log(isNavbarMenuOpen);
+    console.log("Navbar: " + isNavbarMenuOpen);
   }, []);
+
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     console.log("Redirecting to /dashboard");
+  //     router.push("/dashboard");
+  //   } else {
+  //     router.push("/login");
+  //   }
+  // }, [isAuthenticated]);
 
   return (
     <div>
@@ -68,7 +90,7 @@ const Navbar = () => {
           <div>
             <Link href={"/"}>FR-Portal </Link>{" "}
           </div>
-          {session && (
+          {isAuthenticated && (
             <button
               className=" absolute top-0 right-0 px-4 pt-7 md:hidden z-[100] text-2xl"
               onClick={() => openNavbarMenu()}
@@ -78,7 +100,7 @@ const Navbar = () => {
           )}
         </div>
 
-        {session ? (
+        {isAuthenticated ? (
           <ul
             className={`absolute md:static w-screen md:w-full h-screen md:h-full bg-red-400 md:bg-blue-300 opacity-80  md:opacity-100 z-50 md:z-10 left-0 py-20 md:py-0  flex-col flex md:flex-row md:justify-end items-center gap-6 whitespace-nowrap  ${
               isNavbarMenuOpen ? "top-0" : "top-[-1000px]"

@@ -1,29 +1,29 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../components/Button/Button";
-import { useState } from "react";
-
-import { signInWithEmail } from "@/services/Auth";
 import { useRouter } from "next/navigation";
-import { UserContext } from "@/components/contexts/UserContext";
-import { useContext } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { loginWithEmailPassword } from "../GlobalRedux/Features/auth/AuthSlice";
 
 const Login = () => {
-  const router = useRouter();
-  const { login } = useContext(UserContext);
+  const dispatch = useDispatch();
+
+  // const { user } = useSelector((state) => state?.auth);
+
+  const { loading, error } = useSelector((state) => state.auth);
 
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onSubmitHandler = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("userEmail: ", userEmail);
-    console.log("password: ", password);
-
-    const res = await login(userEmail, password);
-    console.log("res: ", res);
-    if (res?.session) {
-      router.push("/dashboard");
+    try {
+      await dispatch(
+        loginWithEmailPassword({ email: userEmail, password: password })
+      );
+    } catch (error) {
+      console.log("error: ", error.message);
     }
   };
 
@@ -35,7 +35,7 @@ const Login = () => {
         </div>
         <div className="mt-8 ">
           <form
-            onSubmit={(e) => onSubmitHandler(e)}
+            onSubmit={(e) => handleLogin(e)}
             className="flex flex-col gap-4 justify-center items-center w-full"
           >
             <label htmlFor="email" className="w-full">
@@ -66,6 +66,9 @@ const Login = () => {
               <Button text="Login" />
             </div>
           </form>
+          {loading ? "Logging in..." : " "}
+
+          {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
         <h1 className="text-xl font-bold my-8 text-center">Or</h1>
         <div className="flex flex-col gap-4 px-10">

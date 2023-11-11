@@ -1,5 +1,5 @@
 "use client";
-// jobs/jobsSlice.js
+// jobs/JobsSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import supabase from "@/services/Supabase";
 
@@ -21,7 +21,7 @@ export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
   }
 });
 
-const jobsSlice = createSlice({
+const JobsSlice = createSlice({
   name: "jobs",
   initialState,
   reducers: {
@@ -45,4 +45,4 @@ const jobsSlice = createSlice({
   },
 });
 
-export default jobsSlice.reducer;
+export default JobsSlice.reducer;

@@ -1,11 +1,14 @@
 "use client";
 // redux/store.js
 import { configureStore } from "@reduxjs/toolkit";
-import jobsReducer from "./jobs/JobsSlice";
+import JobsReducer from "./jobs/JobsSlice";
+import AuthReducer from "./auth/AuthSlice";
 
 export const store = configureStore({
   reducer: {
-    jobs: jobsReducer,
+    jobs: JobsReducer,
+    auth: AuthReducer,
+
     // Add other reducers here if needed
   },
 });
