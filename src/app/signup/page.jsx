@@ -1,39 +1,37 @@
 "use client";
 import React, { useEffect } from "react";
 import Button from "../../components/Button/Button";
-import { registerJobSeeker } from "@/services/Auth";
-import { UserContext } from "@/components/contexts/UserContext";
+import { useDispatch, useSelector } from "react-redux";
+import { signUp } from "../GlobalRedux/Features/auth/AuthSlice";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
 
 import { useState } from "react";
 const SignUp = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const { register, session } = useContext(UserContext);
+  const [role, setRole] = useState("jobseeker");
+  const { user } = useSelector((state) => state.auth);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     console.log("userEmail: ", userEmail);
     console.log("password: ", password);
+    console.log("role: ", role);
 
-    const res = await register(userEmail, password);
-    console.log("res: ", res);
-    if (res?.session) {
-      router.push("/dashboard");
-    }
+    dispatch(signUp({ email: userEmail, password, role }));
   };
 
   useEffect(() => {
-    const SignUp = async () => {
-      if (session) {
-        router.push("/dashboard");
-      }
-    };
-    SignUp();
-  }, [session]);
+    if (user) {
+      router.push("/dashboard");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    console.log("role: ", role);
+  }, [role]);
 
   return (
     <div className="w-full flex justify-center ">
@@ -42,7 +40,10 @@ const SignUp = () => {
           <h1 className="text-3xl font-bold text-center"> Sign Up</h1>
         </div>
         <div className="mt-8 ">
-          <form className="flex flex-col gap-4 justify-center items-center w-full">
+          <form
+            onSubmit={onSubmitHandler}
+            className="flex flex-col gap-4 justify-center items-center w-full"
+          >
             <label htmlFor="email" className="w-full">
               Email
             </label>
@@ -66,15 +67,31 @@ const SignUp = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="border w-full p-2"
             />
+            {/* radio group for role (jobseeker/recruiter) */}
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="jobseeker">Job Seeker</label>
+              <input
+                type="radio"
+                id="jobseeker"
+                name="role"
+                value="jobseeker"
+                checked={role === "jobseeker"}
+                onChange={(e) => setRole(e.target.value)}
+              />
+              <label htmlFor="recruiter">Recruiter</label>
+              <input
+                type="radio"
+                id="recruiter"
+                name="role"
+                value="recruiter"
+                checked={role === "recruiter"}
+                onChange={(e) => setRole(e.target.value)}
+              />
+            </div>
+
             <div className="py-8">
-              <button
-                onClick={() => {
-                  registerJobSeeker(userEmail, password);
-                }}
-              >
-                Login
-              </button>
-              {/* <Button text="Sign Up" /> */}
+              <button>Sign Up</button>
             </div>
           </form>
         </div>

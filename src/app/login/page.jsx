@@ -9,8 +9,6 @@ import { loginWithEmailPassword } from "../GlobalRedux/Features/auth/AuthSlice";
 const Login = () => {
   const dispatch = useDispatch();
 
-  // const { user } = useSelector((state) => state?.auth);
-
   const { loading, error } = useSelector((state) => state.auth);
 
   const [userEmail, setUserEmail] = useState("");
@@ -33,6 +31,11 @@ const Login = () => {
         <div className="py-4">
           <h1 className="text-3xl font-bold text-center"> Log In</h1>
         </div>
+
+        <input type="checkbox" className="bg-red-400" />
+        <label htmlFor="">Employer</label>
+        <input type="checkbox" className="bg-red-400" />
+
         <div className="mt-8 ">
           <form
             onSubmit={(e) => handleLogin(e)}

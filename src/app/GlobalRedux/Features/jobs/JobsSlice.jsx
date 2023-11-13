@@ -10,8 +10,12 @@ const initialState = {
 };
 export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
   try {
-    const { data, error } = await supabase.from("jobs").select("*");
-    console.log(data);
+    const { data, error } = await supabase
+      .from("jobs")
+      .select("*")
+      .range(0, 10);
+    console.log("Jobs Data: " + data);
+
     if (error) {
       throw new Error(error.message);
     }

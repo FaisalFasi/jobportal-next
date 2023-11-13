@@ -14,7 +14,6 @@ const Setup = () => {
   useEffect(() => {
     const asyncWrapper = async () => {
       const session = await dispatch(fetchUserData());
-
       const logged_in = session?.payload?.access_token;
 
       const protected_urls = ["/dashboard", "/profile", "/messages"];

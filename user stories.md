@@ -1,19 +1,24 @@
-focus on user stories mainly
+COMPONENT/CRUD for create users + profiles
 
-as a jobseeker, i want to sign in and see
+- const {data} = await supabase.auth.whatever()
+- const user = data.session.user
+- await supabase.from("profiles").insert({user_id: user.id, role: "recruite" / "job-seeker", ..... whatever })
 
-1. create signup / signin component
-2. create functions to talk to auth provider
-3. redirect user on success
-4. create JobList component
-5. create function to get jobs table from supabase
+// 13 Nov
 
-as a jobseeker, i want to search for relevant jobs
-as a jobseeker, i want to apply for jobs
-as a jobseeker, i want to see my applications
-as a jobseeker, i want to see my conversations with recruiters
+profile CRUD page
+read the id from the url and let user edit profile if its same
 
-as a recruiter, i want to post jobs
-as a recruiter, i want to sign in and see my jobs
-as a recruiter, i want to see applications for my jobs
-as a recruiter, i want to see my conversations with jobseekers
+depend on profile.role show the profile like if it jobseeker or recruiter
+
+get id from URL
+fetch profile if its not found in slice
+depending on profile.user_id === auth.user.id show editable
+depending on profile.role show the relevant fields
+
+who is this , what is their role, is it me?
+
+AFTER ================
+COMPONENT/CRUD for recruiter to make a job
+COMPONENT/CRUD for job seeker to see jobs
+COMPONENT/CRUD for all users to start / see conversations

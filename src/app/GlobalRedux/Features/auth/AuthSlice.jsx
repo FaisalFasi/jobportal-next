@@ -9,10 +9,10 @@ const initialState = {
   loading: false,
   error: null,
 };
-
 export const signUp = createAsyncThunk(
+  // NEW USER
   "auth/signUp",
-  async ({ email, password }) => {
+  async ({ email, password, role }) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -22,10 +22,20 @@ export const signUp = createAsyncThunk(
       throw new Error(error.message);
     }
 
-    return data;
+    // if successful, we create a "profiles" table entry for the new user
+    const { data: profileData, error: profileError } = await supabase
+      .from("profiles")
+      .insert([{ user_id: data.user.id, role }])
+      .single()
+      .select("*");
+
+    // A "user/human-being" has an entry in the user table and the profiles table.
+
+    return data.user;
   }
 );
 export const loginWithEmailPassword = createAsyncThunk(
+  // EXISTING USER
   "auth/signInWithPassword",
   async ({ email, password }) => {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -36,8 +46,6 @@ export const loginWithEmailPassword = createAsyncThunk(
     if (error) {
       throw new Error(error.message);
     }
-    console.log("data: ", data);
-    console.log("error: ", error);
 
     return data;
   }
@@ -52,22 +60,21 @@ export const signOut = createAsyncThunk("auth/signOut", async () => {
   localStorage.removeItem("user");
 });
 
-export const getUserData = createAsyncThunk("auth/getUserData", async () => {
-  try {
-    const { data, error } = await supabase.auth.getUser();
-    const user = data.user;
+// export const getUserData = createAsyncThunk("auth/getUserData", async () => {
+//   try {
+//     const { data, error } = await supabase.auth.getUser();
+//     const user = data.user;
 
-    console.log("user: ", user);
-    console.log("data: ", data);
-    console.log("error: ", error);
-    if (error) {
-      throw new Error(error.message);
-    }
-    return user;
-  } catch (error) {
-    console.log("error: ", error);
-  }
-});
+//     console.log("user: ", user);
+
+//     if (error) {
+//       throw new Error(error.message);
+//     }
+//     return user;
+//   } catch (error) {
+//     console.log("error: ", error);
+//   }
+// });
 
 export const fetchUserData = createAsyncThunk(
   "auth/fetchUserData",
@@ -75,23 +82,12 @@ export const fetchUserData = createAsyncThunk(
   async () => {
     const { data, error } = await supabase.auth.getSession();
 
-    console.log(data.session);
-    console.log("Data: ", data);
-
     if (error) {
       throw new Error(error.message);
     }
     return data.session;
   }
 );
-
-// export const getSession = createAsyncThunk("auth/getSesstion", async () => {
-//   const session = await supabase.auth.getSession();
-
-//   console.log("Session: ", session);
-
-//   return session;
-// });
 
 const AuthSlice = createSlice({
   name: "auth",
@@ -125,8 +121,8 @@ const AuthSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.isAuthenticated = true;
-        console.log("action.payload: ", action.payload);
-        console.log("isAuthenticated ", state.isAuthenticated);
+        // console.log("action.payload: ", action.payload);
+        // console.log("isAuthenticated ", state.isAuthenticated);
         state.user = action.payload;
 
         // Store user data in local storage

@@ -1,5 +1,11 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchMyProfile,
+  updateProfile, // <<< TODO make this function
+} from "../GlobalRedux/Features/profile/ProfileSlice";
 
 const professionalLinks = [
   {
@@ -17,32 +23,98 @@ const professionalLinks = [
 ];
 
 const page = () => {
+  const dispatch = useDispatch();
+
+  const loggedInUserId = useSelector((state) => state?.auth?.user?.user?.id);
+
+  const getUserProfile = useSelector((state) => state?.profiles?.profiles[0]);
+
+  // console.log("getUserProfile:", getUserProfile);
+
+  const [isProfileEditted, setIsProfileEditted] = useState(false);
+
+  const [updateUserData, setUpdateUserData] = useState({
+    user_id: "",
+    name: "",
+    email: "",
+    phone: "",
+    location: "",
+  });
+  useEffect(() => {
+    setUpdateUserData({
+      user_id: loggedInUserId,
+      name: getUserProfile?.name || "",
+      email: getUserProfile?.email || "",
+      phone: getUserProfile?.phone || "",
+      location: getUserProfile?.location || "",
+    });
+  }, [loggedInUserId]);
+
+  useEffect(() => {
+    const asyncWrapper = async () => {
+      try {
+        if (!loggedInUserId) return;
+        await dispatch(fetchMyProfile(loggedInUserId));
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    asyncWrapper();
+  }, [dispatch, loggedInUserId]);
+
+  const handleEdit = () => {
+    console.log("edit");
+    setIsProfileEditted(!isProfileEditted);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (!loggedInUserId || !updateUserData) {
+        console.error("loggedInUser or updateUserData is undefined.");
+        return;
+      }
+      console.log("updateUserData: ", updateUserData);
+      await dispatch(updateProfile(updateUserData));
+
+      setIsProfileEditted(false);
+    } catch (error) {
+      console.error("Error updating user data:", error);
+    }
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUpdateUserData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
   return (
     <div>
       <div className="h-full w-full md:w-2/3 flex justify-center items-center m-auto">
         <div className=" w-full m-4 p-4 bg-gray-300 flex flex-col items-center gap-10">
           <div className="w-full flex justify-between ">
             <h1 className="font-bold text-xl">Profile</h1>
-            <h2>Edit</h2>
+            <button onClick={handleEdit}>Edit</button>
           </div>
           <div className="flex w-full items-start gap-20">
             <div className="flex flex-col gap-8 items-center">
               <Image
                 src="/myImage.png"
-                priority
                 alt="profile picture"
+                priority
                 width={100}
                 height={100}
-                className="rounded-full"
+                className="w-auto rounded-full"
               />
               <h1 className="font-bold">Upload</h1>
             </div>
             <div>
-              <h3 className="font-bold">User Name</h3>
+              <h3 className="font-bold">{updateUserData?.name}</h3>
               <div className="">
-                <p>email</p>
-                <p>phone</p>
-                <p>address</p>
+                <p>{updateUserData.email}</p>
+                <p>{updateUserData.phone}</p>
+                <p>{updateUserData.location}</p>
               </div>
             </div>
           </div>
@@ -82,9 +154,9 @@ const page = () => {
             <button> edit</button>
           </div>
           <div>
-            {professionalLinks.map((link) => {
+            {professionalLinks.map((link, idx) => {
               return (
-                <div className="pb-4">
+                <div key={idx} className="pb-4">
                   <h2 className=" text-gray-500">{link.name} </h2>
                   <a href={link.link}>
                     <p>{link.link}</p>
@@ -95,33 +167,76 @@ const page = () => {
           </div>
         </div>
       </div>
+
+      {isProfileEditted && (
+        <div className="w-screen  h-screen fixed top-0 flex items-center justify-center bg-black z-50 bg-opacity-50  m-auto">
+          <div className=" w-full md:w-1/2  bg-gray-100 rounded-md m-6 md:m-20 p-4 md:p-8   ">
+            <h1 className="text-2xl font-bold mb-4">User Profile Update</h1>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold mb-2">
+                  Name:
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  value={updateUserData.name}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border border-gray-300 rounded-md"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">
+                  Email:
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={updateUserData.email}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border border-gray-300 rounded-md"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">
+                  Phone:
+                </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone"
+                  value={updateUserData.phone}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border border-gray-300 rounded-md"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2">
+                  Address:
+                </label>
+                <input
+                  type="text"
+                  name="address"
+                  placeholder="Address"
+                  value={updateUserData.location}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border border-gray-300 rounded-md"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+              >
+                Update Profile
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default page;
-{
-  /* <div className="w-full h-60 flex flex-col items-center gap-10   m-8  border-4 border-red-300">
-  <div className="w-full">
-    <h2 className="w-full text-right">Edit</h2>
-  </div>
-  <div className="flex w-full items-center gap-4">
-    <div>
-      <Image
-        src="/myImage.png"
-        priority
-        alt="profile picture"
-        width={100}
-        height={100}
-        className="rounded-full"
-      />
-    </div>
-    <div>
-      <h3>Username</h3>
-      <p>email</p>
-      <p>phone</p>
-      <p>address</p>
-    </div>
-  </div>
-</div>; */
-}

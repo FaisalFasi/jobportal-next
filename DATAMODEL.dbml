@@ -1,0 +1,64 @@
+Table users {
+id uuid [pk] // primary key
+// Other fields managed by Supabase auth service
+}
+
+Table profiles {
+id uuid [pk]
+role varchar
+user_id uuid [ref: > users.id] // Foreign Key to User Table
+name varchar
+email varchar
+phone varchar
+location varchar
+bio text
+experience text
+education text
+}
+
+Table jobs {
+id uuid [pk]
+title varchar
+description text
+recruiter_id uuid [ref: > users.id] // Foreign Key to User Table
+company_url varchar
+company_name varchar
+salary varchar
+location varchar
+remote_possible boolean
+language_required varchar
+}
+
+Table messages {
+id uuid [pk]
+sender_id uuid [ref: > users.id] // Foreign Key to User Table
+conversation_id uuid [ref: > conversations.id] // Foreign Key to Conversation Table
+body text
+}
+
+Table conversations {
+id uuid [pk]
+user1_id  uuid [ref: > users.id] // Foreign Key to User Table
+user2_id uuid [ref: > users.id] // Foreign Key to User Table
+}
+
+Table companies {
+id uuid [pk]
+user_id uuid  [ref: > users.id] // Foreign Key to User Table
+name varchar
+url varchar
+location varchar
+industry varchar
+description text
+contact_email varchar
+}
+
+Table job_applications {
+id uuid [pk]
+job_id uuid [ref: > jobs.id] // Foreign Key to Job Table
+applicant_id uuid  [ref: > users.id] // Foreign Key to User Table
+status varchar // e.g., 'applied', 'reviewing', 'rejected', 'accepted'
+application_date datetime
+resume_url varchar // URL to the applicant's resume
+cover_letter text
+}

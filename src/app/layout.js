@@ -3,7 +3,6 @@ import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import Setup from "@/components/setup/Setup";
-import { UserProvider } from "@/components/contexts/UserContext";
 import { Providers } from "./GlobalRedux/Features/provider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,12 +17,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body suppressHydrationWarning={true}>
         <Providers>
-          <UserProvider>
-            <Setup />
-            <Navbar />
-            <div className="pt-[88px]">{children}</div>
-            {/* <Footer /> */}
-          </UserProvider>
+          <Setup />
+          <Navbar />
+          <div className="pt-[88px]">{children}</div>
+          {/* <Footer /> */}
         </Providers>
       </body>
     </html>

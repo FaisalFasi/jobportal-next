@@ -65,36 +65,3 @@ export async function loginWithEmail(email, password) {
   console.log(res);
   return res;
 }
-// registerRecruiter with email and password
-export async function registerRecruiter(email, password) {
-  const res = await signUpNewUser(email, password);
-  //... do Recruiter setup stuff...
-
-  const newProfile = supabase.from("profiles").insert({
-    user_id: res.data.whatever.session.whatever.user.id,
-    role: "recruiter",
-    avatar_url: user.user_metadata.avatar_url, // if something comes from the OAuth provider(like github), it will be in user_metadata
-  });
-  return res;
-}
-
-// registerJobSeeker with email and password
-export async function registerJobSeeker(email, password) {
-  const res = await signUpNewUser(email, password);
-  console.log(res.email, res.password);
-
-  const newProfile = supabase.from("profiles").insert({
-    user_id: res.data.whatever.session.whatever.user.id,
-    role: "jobseeker",
-    avatar_url: user.user_metadata.avatar_url, // if something comes from the OAuth provider(like github), it will be in user_metadata
-  });
-  return res;
-}
-
-// createUser;
-// login;
-// logout;
-// resetPassword;
-// updateUser;
-// getUser;
-// getUsers;

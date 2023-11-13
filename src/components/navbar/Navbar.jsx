@@ -4,10 +4,7 @@ import React, { use, useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchUserData,
-  signOut as logout,
-} from "@/app/GlobalRedux/Features/auth/AuthSlice";
+import { signOut as logout } from "@/app/GlobalRedux/Features/auth/AuthSlice";
 const navbarLinks = [
   {
     id: 1,
@@ -44,7 +41,6 @@ const navbarLinks = [
 ];
 
 const Navbar = () => {
-  const router = useRouter();
   const dispatch = useDispatch();
 
   const isAuthenticated = useSelector((state) => state?.auth.isAuthenticated);
@@ -74,17 +70,9 @@ const Navbar = () => {
     console.log("Navbar: " + isNavbarMenuOpen);
   }, []);
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     console.log("Redirecting to /dashboard");
-  //     router.push("/dashboard");
-  //   } else {
-  //     router.push("/login");
-  //   }
-  // }, [isAuthenticated]);
-
   return (
     <div>
+      {/* Hey, welcome back {profile.username}! */}
       <div className="fixed w-full flex justify-between  items-center top-0 px-4 py-8 bg-blue-300 ">
         <div className="w-full flex justify-between items-center ">
           <div>

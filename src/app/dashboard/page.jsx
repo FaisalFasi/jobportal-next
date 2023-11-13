@@ -11,9 +11,9 @@ const page = () => {
     dispatch(fetchJobs());
   }, []);
 
-  useEffect(() => {
-    console.log("jobs", jobs);
-  }, [jobs]);
+  // useEffect(() => {
+  //   console.log("jobs", jobs);
+  // }, [jobs]);
 
   return (
     <div>
