@@ -64,7 +64,7 @@ export const updateProfile = createAsyncThunk(
       console.log("updateUserData: ", updateUserData);
       const { data, error } = await supabase
         .from("profiles")
-        .upsert(updateUserData)
+        .update(updateUserData)
         .eq("user_id", updateUserData.user_id);
 
       console.log("updated profile data: " + data);

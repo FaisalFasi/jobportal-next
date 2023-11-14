@@ -29,17 +29,17 @@ const page = () => {
 
   const getUserProfile = useSelector((state) => state?.profiles?.profiles[0]);
 
-  // console.log("getUserProfile:", getUserProfile);
-
   const [isProfileEditted, setIsProfileEditted] = useState(false);
+  console.log("getUserProfile: ", getUserProfile?.role);
 
   const [updateUserData, setUpdateUserData] = useState({
-    user_id: "",
-    name: "",
-    email: "",
-    phone: "",
-    location: "",
+    user_id: loggedInUserId,
+    name: getUserProfile?.name || "",
+    email: getUserProfile?.email || "",
+    phone: getUserProfile?.phone || "",
+    location: getUserProfile?.location || "",
   });
+
   useEffect(() => {
     setUpdateUserData({
       user_id: loggedInUserId,
@@ -48,7 +48,7 @@ const page = () => {
       phone: getUserProfile?.phone || "",
       location: getUserProfile?.location || "",
     });
-  }, [loggedInUserId]);
+  }, [loggedInUserId, getUserProfile]);
 
   useEffect(() => {
     const asyncWrapper = async () => {
@@ -63,7 +63,6 @@ const page = () => {
   }, [dispatch, loggedInUserId]);
 
   const handleEdit = () => {
-    console.log("edit");
     setIsProfileEditted(!isProfileEditted);
   };
 
@@ -74,7 +73,6 @@ const page = () => {
         console.error("loggedInUser or updateUserData is undefined.");
         return;
       }
-      console.log("updateUserData: ", updateUserData);
       await dispatch(updateProfile(updateUserData));
 
       setIsProfileEditted(false);
@@ -121,32 +119,37 @@ const page = () => {
         </div>
       </div>
       <div className="h-full w-full  flex justify-center items-center">
-        <div className="w-full md:w-1/2 h-1/2 m-4 p-4 bg-gray-300 flex flex-col items-start ">
-          <div>
-            <h1 className="text-xl font-semibold"> CV</h1>
-          </div>
-          <div className="w-full p-4 ">
-            <p>
-              This CV will by default be used for your future applications. Of
-              course, you will always have the option to upload another CV
-              during each application process.
-            </p>
-            <div className="flex gap-4 items-center p-4 mt-4 border-2 border-gray-200 shadow-lg  rounded-md ">
-              <div>icon</div>
-              <div className="w-full flex justify-between">
-                <div>
-                  <h2>CV</h2>
-                  <p>name of uploaded cv i.e(Faisal_CV.pdf)</p>
-                </div>
-                <div className="flex flex-col">
-                  <button>watch</button>
-                  <button>delete</button>
+        {getUserProfile?.role === "jobseeker" ? (
+          <div className="w-full md:w-1/2 h-1/2 m-4 p-4 bg-gray-300 flex flex-col items-start ">
+            <div>
+              <h1 className="text-xl font-semibold"> CV</h1>
+            </div>
+            <div className="w-full p-4 ">
+              <p>
+                This CV will by default be used for your future applications. Of
+                course, you will always have the option to upload another CV
+                during each application process.
+              </p>
+              <div className="flex gap-4 items-center p-4 mt-4 border-2 border-gray-200 shadow-lg  rounded-md ">
+                <div>icon</div>
+                <div className="w-full flex justify-between">
+                  <div>
+                    <h2>CV</h2>
+                    <p>name of uploaded cv i.e(Faisal_CV.pdf)</p>
+                  </div>
+                  <div className="flex flex-col">
+                    <button>watch</button>
+                    <button>delete</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div>recruiter profile</div>
+        )}
       </div>
+
       <div className="h-full w-full flex justify-center items-center">
         <div className="w-full md:w-1/2 h-1/2 m-4 p-4 bg-gray-300 flex flex-col items-start gap-10">
           <div className="w-full flex justify-between">
@@ -218,19 +221,28 @@ const page = () => {
                 </label>
                 <input
                   type="text"
-                  name="address"
-                  placeholder="Address"
+                  name="location"
+                  placeholder="location"
                   value={updateUserData.location}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded-md"
                 />
               </div>
-              <button
-                type="submit"
-                className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-              >
-                Update Profile
-              </button>
+              <div className="flex gap-4">
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+                >
+                  Update Profile
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+                  onClick={handleEdit}
+                >
+                  Cancel
+                </button>
+              </div>
             </form>
           </div>
         </div>

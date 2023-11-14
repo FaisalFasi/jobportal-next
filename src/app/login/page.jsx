@@ -32,10 +32,6 @@ const Login = () => {
           <h1 className="text-3xl font-bold text-center"> Log In</h1>
         </div>
 
-        <input type="checkbox" className="bg-red-400" />
-        <label htmlFor="">Employer</label>
-        <input type="checkbox" className="bg-red-400" />
-
         <div className="mt-8 ">
           <form
             onSubmit={(e) => handleLogin(e)}

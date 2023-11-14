@@ -16,16 +16,17 @@ const SignUp = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log("userEmail: ", userEmail);
-    console.log("password: ", password);
-    console.log("role: ", role);
+    // console.log("userEmail: ", userEmail);
+    // console.log("password: ", password);
+    // console.log("role: ", role);
 
     dispatch(signUp({ email: userEmail, password, role }));
   };
 
   useEffect(() => {
-    if (user) {
-      router.push("/dashboard");
+    console.log("user: ", user);
+    if (user?.aud === "authenticated") {
+      router.push("/login");
     }
   }, [user]);
 
@@ -69,29 +70,35 @@ const SignUp = () => {
             />
             {/* radio group for role (jobseeker/recruiter) */}
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="jobseeker">Job Seeker</label>
-              <input
-                type="radio"
-                id="jobseeker"
-                name="role"
-                value="jobseeker"
-                checked={role === "jobseeker"}
-                onChange={(e) => setRole(e.target.value)}
-              />
-              <label htmlFor="recruiter">Recruiter</label>
-              <input
-                type="radio"
-                id="recruiter"
-                name="role"
-                value="recruiter"
-                checked={role === "recruiter"}
-                onChange={(e) => setRole(e.target.value)}
-              />
+            <div className="flex  gap-8">
+              <div className=" flex gap-4">
+                <label htmlFor="jobseeker">Job Seeker</label>
+                <input
+                  type="radio"
+                  id="jobseeker"
+                  name="role"
+                  value="jobseeker"
+                  checked={role === "jobseeker"}
+                  onChange={(e) => setRole(e.target.value)}
+                />
+              </div>
+              <div className=" flex gap-4">
+                <label htmlFor="recruiter">Recruiter</label>
+                <input
+                  type="radio"
+                  id="recruiter"
+                  name="role"
+                  value="recruiter"
+                  checked={role === "recruiter"}
+                  onChange={(e) => setRole(e.target.value)}
+                />
+              </div>
             </div>
 
             <div className="py-8">
-              <button>Sign Up</button>
+              <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
+                Sign Up
+              </button>
             </div>
           </form>
         </div>
