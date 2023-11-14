@@ -1,11 +1,13 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import JobPostForm from "@/components/jobPostForm/JobPostForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMyProfile,
   updateProfile, // <<< TODO make this function
 } from "../GlobalRedux/Features/profile/ProfileSlice";
+import { createJob } from "../GlobalRedux/Features/jobs/JobsSlice";
 
 const professionalLinks = [
   {
@@ -30,7 +32,7 @@ const page = () => {
   const getUserProfile = useSelector((state) => state?.profiles?.profiles[0]);
 
   const [isProfileEditted, setIsProfileEditted] = useState(false);
-  console.log("getUserProfile: ", getUserProfile?.role);
+  const [postJobClicked, setPostJobClicked] = useState(false);
 
   const [updateUserData, setUpdateUserData] = useState({
     user_id: loggedInUserId,
@@ -87,6 +89,16 @@ const page = () => {
       [name]: value,
     }));
   };
+
+  const handleAddPost = async (jobDetails) => {
+    await dispatch(createJob(jobDetails));
+
+    console.log("add post details: ", jobDetails);
+  };
+  const handlePostJob = () => {
+    setPostJobClicked(!postJobClicked);
+  };
+
   return (
     <div>
       <div className="h-full w-full md:w-2/3 flex justify-center items-center m-auto">
@@ -146,7 +158,22 @@ const page = () => {
             </div>
           </div>
         ) : (
-          <div>recruiter profile</div>
+          <div className="w-full text-center">
+            <button
+              className="bg-gray-200 w-1/3 rounded"
+              onClick={handlePostJob}
+            >
+              Post a Job
+            </button>
+
+            {postJobClicked && (
+              <JobPostForm
+                onClose={handlePostJob}
+                onAddJob={handleAddPost}
+                loggedInUserId={loggedInUserId}
+              />
+            )}
+          </div>
         )}
       </div>
 

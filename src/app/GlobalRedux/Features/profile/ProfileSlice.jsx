@@ -21,7 +21,7 @@ export const fetchProfileByUserId = createAsyncThunk(
         .select("*")
         .eq("user_id", userId);
 
-      console.log(">>>>profile data: " + data);
+      //   console.log(">>>>profile data: " + data);
       if (error) {
         throw new Error(error.message);
       }
@@ -44,7 +44,7 @@ export const fetchMyProfile = createAsyncThunk(
 
       //   let { data, error } = await supabase.from("profiles").select("*");
 
-      console.log("loggedIn user profile : " + data);
+      //   console.log("loggedIn user profile : " + data);
       if (error) {
         throw new Error(error.message);
       }
@@ -61,13 +61,13 @@ export const updateProfile = createAsyncThunk(
 
   async (updateUserData) => {
     try {
-      console.log("updateUserData: ", updateUserData);
+      //   console.log("updateUserData: ", updateUserData);
       const { data, error } = await supabase
         .from("profiles")
         .update(updateUserData)
         .eq("user_id", updateUserData.user_id);
 
-      console.log("updated profile data: " + data);
+      //   console.log("updated profile data: " + data);
       if (error) {
         throw new Error(error.message);
       }
@@ -92,7 +92,7 @@ export const ProfileSlice = createSlice({
         state.profiles = action.payload;
 
         state.error = null;
-        console.log("state: ", state.profiles);
+        // console.log("state: ", state.profiles);
       })
       .addCase(fetchMyProfile.rejected, (state, action) => {
         state.loading = false;
@@ -106,7 +106,7 @@ export const ProfileSlice = createSlice({
         state.loading = false;
         state.profiles = action.payload;
         state.error = null;
-        console.log("state: ", state.profiles);
+        // console.log("state: ", state.profiles);
       })
       .addCase(fetchProfileByUserId.rejected, (state, action) => {
         state.loading = false;
@@ -120,7 +120,7 @@ export const ProfileSlice = createSlice({
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.loading = false;
 
-        console.log("Before <<<<<: ", action.payload);
+        // console.log("Before <<<<<: ", action.payload);
 
         const updatedProfileIndex = state.profiles.findIndex(
           (profile) => profile.user_id === action.payload?.user_id
@@ -133,7 +133,7 @@ export const ProfileSlice = createSlice({
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.loading = false;
-        console.log("action.error.message: ", action.error.message);
+        // console.log("action.error.message: ", action.error.message);
         state.error = action.error.message;
       });
   },

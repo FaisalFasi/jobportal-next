@@ -60,14 +60,14 @@ const Navbar = () => {
 
   useEffect(() => {
     if (error) {
-      console.log("error: ");
+      // console.log("error: ");
       console.log("error: ", error.message);
     }
   }, [error]);
 
   useEffect(() => {
     setIsnavbarMenuOpen(false);
-    console.log("Navbar: " + isNavbarMenuOpen);
+    // console.log("Navbar: " + isNavbarMenuOpen);
   }, []);
 
   return (
