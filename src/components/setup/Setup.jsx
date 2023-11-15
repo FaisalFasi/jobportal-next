@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { fetchUserData } from "@/app/GlobalRedux/Features/auth/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+import { fetchMyProfile } from "@/app/GlobalRedux/Features/profile/ProfileSlice";
 const Setup = () => {
   const router = useRouter();
   const dispatch = useDispatch();

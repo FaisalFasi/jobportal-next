@@ -6,6 +6,7 @@ const JobPostForm = ({ onClose, onAddJob, loggedInUserId }) => {
     title: "",
     description: "",
     recruiter_id: loggedInUserId.toString(),
+    language_required: "",
     company_url: "",
     company_name: "",
     salary: "",
@@ -25,22 +26,6 @@ const JobPostForm = ({ onClose, onAddJob, loggedInUserId }) => {
     onClose();
 
     console.log("jobDetails: " + JSON.stringify(jobDetails));
-
-    // Validate job details before adding
-    // if (
-    //   jobDetails.title &&
-    //   jobDetails.description &&
-    //   jobDetails.recruiterId &&
-    //   jobDetails.companyUrl &&
-    //   jobDetails.companyName &&
-    //   jobDetails.salary &&
-    //   jobDetails.location
-    // ) {
-    //   onAddJob(jobDetails);
-    //   onClose();
-    // } else {
-    //   console.error("Please fill in all required fields.");
-    // }
   };
   const handleWheel = (e) => {
     const isPopupContent = e.target.closest(".your-popup-content-class");
@@ -84,7 +69,7 @@ const JobPostForm = ({ onClose, onAddJob, loggedInUserId }) => {
               </label>
               <input
                 type="text"
-                name="companyName"
+                name="company_name"
                 value={jobDetails.company_name}
                 onChange={handleInputChange}
                 className=" w-full border p-2 rounded border-gray-600"
@@ -93,12 +78,12 @@ const JobPostForm = ({ onClose, onAddJob, loggedInUserId }) => {
 
             <div className=" w-full md:w-2/5 flex flex-col  items-start justify-start gap-4 ">
               <label className=" text-gray-700 text-sm font-bold ">
-                Recruiter ID:
+                Language Required:
               </label>
               <input
                 type="text"
-                name="recruiterId"
-                value={jobDetails.recruiter_id}
+                name="language_required"
+                value={jobDetails.language_required}
                 onChange={handleInputChange}
                 className=" w-full border p-2 rounded border-gray-600"
               />
@@ -110,7 +95,7 @@ const JobPostForm = ({ onClose, onAddJob, loggedInUserId }) => {
               </label>
               <input
                 type="text"
-                name="companyUrl"
+                name="company_url"
                 value={jobDetails.company_url}
                 onChange={handleInputChange}
                 className=" w-full border p-2 rounded border-gray-600"

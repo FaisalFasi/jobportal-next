@@ -2,39 +2,38 @@
 import Link from "next/link";
 import React, { use, useEffect, useState } from "react";
 
-import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut as logout } from "@/app/GlobalRedux/Features/auth/AuthSlice";
 const navbarLinks = [
+  // {
+  //   id: 1,
+  //   title: "Home",
+  //   url: "/",
+  // },
   {
     id: 1,
-    title: "Home",
-    url: "/",
-  },
-  {
-    id: 2,
     title: "Applied Jobs",
     url: "/appliedjobs",
   },
 
   {
-    id: 3,
+    id: 2,
     title: "Profile",
     url: "/profile",
   },
 
   {
-    id: 4,
+    id: 3,
     title: "Messages",
     url: "/messages",
   },
   {
-    id: 5,
+    id: 4,
     title: "Setting",
     url: "/setting",
   },
   {
-    id: 6,
+    id: 5,
     title: "Dashboard",
     url: "/dashboard",
   },
@@ -43,12 +42,12 @@ const navbarLinks = [
 const Navbar = () => {
   const dispatch = useDispatch();
 
-  const isAuthenticated = useSelector((state) => state?.auth.isAuthenticated);
-  const user = useSelector((state) => state?.auth.user);
+  const isAuthenticated = useSelector((state) => state?.auth?.isAuthenticated);
+  const user = useSelector((state) => state?.auth?.user);
 
   const [isNavbarMenuOpen, setIsnavbarMenuOpen] = useState(false);
 
-  const error = useSelector((state) => state?.auth?.error);
+  // const error = useSelector((state) => state?.auth?.error);
 
   const openNavbarMenu = () => {
     setIsnavbarMenuOpen(!isNavbarMenuOpen);
@@ -58,12 +57,14 @@ const Navbar = () => {
     dispatch(logout());
   };
 
-  useEffect(() => {
-    if (error) {
-      // console.log("error: ");
-      console.log("error: ", error.message);
-    }
-  }, [error]);
+  // useEffect(() => {
+  //   const asyncWrapper = async () => {
+  //     if (!user?.id) return;
+  //     const userProfile = await dispatch(fetchMyProfile(user?.id));
+  //     console.log("userProfile", userProfile);
+  //   };
+  //   asyncWrapper();
+  // }, [user]);
 
   useEffect(() => {
     setIsnavbarMenuOpen(false);
@@ -76,7 +77,8 @@ const Navbar = () => {
       <div className="fixed w-full flex justify-between  items-center top-0 px-4 py-8 bg-blue-300 ">
         <div className="w-full flex justify-between items-center ">
           <div>
-            <Link href={"/"}>FR-Portal </Link>{" "}
+            {/* <Link href={"/"}>FR-Portal </Link>{" "} */}
+            <h1>FR-Portal </h1>
           </div>
           {isAuthenticated && (
             <button

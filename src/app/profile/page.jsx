@@ -28,7 +28,6 @@ const page = () => {
   const dispatch = useDispatch();
 
   const loggedInUserId = useSelector((state) => state?.auth?.user?.user?.id);
-
   const getUserProfile = useSelector((state) => state?.profiles?.profiles[0]);
 
   const [isProfileEditted, setIsProfileEditted] = useState(false);

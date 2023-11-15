@@ -14,7 +14,6 @@ export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
       .from("jobs")
       .select("*")
       .range(0, 10);
-    console.log("Jobs Data: " + data);
 
     if (error) {
       throw new Error(error.message);
@@ -24,6 +23,26 @@ export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
     throw error;
   }
 });
+
+export const fetchMyJobs = createAsyncThunk(
+  "jobs/fetchMyJobs",
+  async (loggedInUserId) => {
+    try {
+      const { data, error } = await supabase
+        .from("jobs")
+        .select("*")
+        .eq("recruiter_id", loggedInUserId)
+        .range(0, 10);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 export const createJob = createAsyncThunk("jobs/createJob", async (jobData) => {
   try {
@@ -85,6 +104,19 @@ const JobsSlice = createSlice({
         state.error = null;
       })
       .addCase(createJob.rejected, (state, action) => {
+        state.loading = false;
+        state.jobs = [];
+        state.error = action.error.message;
+      })
+      .addCase(fetchMyJobs.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchMyJobs.fulfilled, (state, action) => {
+        state.loading = false;
+        state.jobs = action.payload;
+        state.error = null;
+      })
+      .addCase(fetchMyJobs.rejected, (state, action) => {
         state.loading = false;
         state.jobs = [];
         state.error = action.error.message;

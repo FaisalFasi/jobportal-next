@@ -76,7 +76,11 @@ const Login = () => {
         </div>
         <div className="flex flex-col gap-8 my-8 text-center">
           <h2> Don't have an account?</h2>
-          <Button url={"/signup"} text="Sign Up" />
+          <Button
+            onClick={() => console.log("Apply")}
+            url={"/signup"}
+            text="Sign Up"
+          />
         </div>
       </div>
     </div>

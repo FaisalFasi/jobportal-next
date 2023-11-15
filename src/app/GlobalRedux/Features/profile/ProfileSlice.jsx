@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import supabase from "@/services/Supabase";
 
@@ -10,29 +9,6 @@ const initialState = {
   error: null,
 };
 
-export const fetchProfileByUserId = createAsyncThunk(
-  "profiles/fetchProfileByUserId",
-
-  async (userId) => {
-    try {
-      let { data, error } = await supabase
-
-        .from("profiles")
-        .select("*")
-        .eq("user_id", userId);
-
-      //   console.log(">>>>profile data: " + data);
-      if (error) {
-        throw new Error(error.message);
-      }
-
-      return data;
-    } catch (error) {
-      throw error;
-    }
-  }
-);
-
 export const fetchMyProfile = createAsyncThunk(
   "profiles/fetchMyProfile",
   async (loggedInUserId) => {
@@ -42,9 +18,6 @@ export const fetchMyProfile = createAsyncThunk(
         .select("*")
         .eq("user_id", loggedInUserId);
 
-      //   let { data, error } = await supabase.from("profiles").select("*");
-
-      //   console.log("loggedIn user profile : " + data);
       if (error) {
         throw new Error(error.message);
       }
@@ -99,20 +72,7 @@ export const ProfileSlice = createSlice({
         state.profiles = [];
         state.error = action.error.message;
       })
-      .addCase(fetchProfileByUserId.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchProfileByUserId.fulfilled, (state, action) => {
-        state.loading = false;
-        state.profiles = action.payload;
-        state.error = null;
-        // console.log("state: ", state.profiles);
-      })
-      .addCase(fetchProfileByUserId.rejected, (state, action) => {
-        state.loading = false;
-        state.profiles = [];
-        state.error = action.error.message;
-      })
+
       .addCase(updateProfile.pending, (state) => {
         state.loading = true;
         state.error = null;
