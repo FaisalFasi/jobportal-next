@@ -94,7 +94,7 @@ const Page = () => {
 
     console.log("add post details: ", jobDetails);
   };
-  const handlePostJob = () => {
+  const toggleJobModal = () => {
     setPostJobClicked(!postJobClicked);
   };
 
@@ -157,17 +157,17 @@ const Page = () => {
             </div>
           </div>
         ) : (
-          <div className="w-full text-center">
+          <div className="w-full text-center ">
             <button
               className="bg-gray-200 w-1/3 rounded"
-              onClick={handlePostJob}
+              onClick={toggleJobModal}
             >
               Post a Job
             </button>
 
             {postJobClicked && (
               <JobPostForm
-                onClose={handlePostJob}
+                onClose={toggleJobModal}
                 onAddJob={handleAddPost}
                 loggedInUserId={loggedInUserId}
               />

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { fetchJobs, fetchMyJobs } from "../GlobalRedux/Features/jobs/JobsSlice";
 import { fetchMyProfile } from "../GlobalRedux/Features/profile/ProfileSlice";
 import { useSelector } from "react-redux";
-import Button from "@/components/Button/Button";
+import Card from "@/components/Card/Card";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const Page = () => {
   const { jobs } = useSelector((state) => state.jobs);
 
   const [isRecruiter, setIsRecruiter] = useState(false);
-
+  console.log("jobs", jobs);
   useEffect(() => {
     const asyncWrapper = async () => {
       if (!loggedInUserId) return;
@@ -48,32 +48,13 @@ const Page = () => {
         <div className="pt-4">
           <div>
             <h1 className="text-center font-bold text-2xl">
-              {isRecruiter ? "Posted Jobs" : "All Jobs"}
+              {isRecruiter ? "Your Jobs" : "All Jobs"}
             </h1>
           </div>
         </div>
         {jobs &&
-          jobs.map((job) => {
-            return (
-              <div
-                key={job.id}
-                className="flex flex-col sm:flex-row gap-6 items-start mt-8 bg-white shadow-md p-4 rounded-md"
-              >
-                <div> company icon</div>
-
-                <div className="w-full flex flex-col gap-4 ">
-                  <div className="flex flex-col md:flex-row gap-4 justify-between">
-                    <div>
-                      <h2 className="font-semibold text-lg">{job.title}</h2>
-                      <p className="text-sm">{job.company_name}</p>
-                    </div>
-                  </div>
-                  <div className=" text-end">
-                    <Button className="" text={"Apply"}></Button>
-                  </div>
-                </div>
-              </div>
-            );
+          jobs.map((job, idx) => {
+            return <Card key={idx} job={job} isRecruiter={isRecruiter} />;
           })}
       </div>
     </div>
@@ -81,3 +62,38 @@ const Page = () => {
 };
 
 export default Page;
+
+// <div
+//   key={job.id}
+//   className="flex flex-col sm:flex-row gap-6 items-start mt-8 bg-white shadow-md p-4 rounded-md"
+// >
+//   <div> company icon</div>
+
+//   <div className="w-full flex flex-col gap-4 ">
+//     <div className="flex flex-col md:flex-row gap-4 justify-between">
+//       <div>
+//         <h2 className="font-semibold text-lg">{job.title}</h2>
+//         <p className="text-sm">{job.company_name}</p>
+//       </div>
+//     </div>
+//     <div className="w-full flex justify-end text-end">
+//       {isRecruiter ? (
+//         <Button
+//           text={"Apply"}
+//           onClick={() => handleApply()}
+//         ></Button>
+//       ) : (
+//         <div className="flex gap-4 ">
+//           <Button
+//             text={"Edit"}
+//             onClick={() => handleApply()}
+//           ></Button>
+//           <Button
+//             text={"Delete"}
+//             onClick={() => handleApply()}
+//           ></Button>
+//         </div>
+//       )}
+//     </div>
+//   </div>
+// </div>

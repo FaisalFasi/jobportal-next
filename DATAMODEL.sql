@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS profiles, companies, jobs, conversations, messages, job_applications;
 -- Profiles Table
 CREATE TABLE profiles (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -10,6 +11,9 @@ CREATE TABLE profiles (
   bio TEXT,
   experience TEXT,
   education TEXT,
+  linkedin VARCHAR(255),
+  github VARCHAR(255),
+  personal_website VARCHAR(255),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   modified_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -34,12 +38,14 @@ CREATE TABLE jobs (
   title VARCHAR(255),
   description TEXT,
   recruiter_id UUID REFERENCES auth.users(id),
+  email VARCHAR(255),
   company_url VARCHAR(255),
   company_name VARCHAR(255),
   salary VARCHAR(255),
   location VARCHAR(255),
   remote_possible BOOLEAN,
   language_required VARCHAR(255),
+  status VARCHAR(255) NOT NULL DEFAULT 'Draft', 
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   modified_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );

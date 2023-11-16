@@ -13,6 +13,7 @@ export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
     const { data, error } = await supabase
       .from("jobs")
       .select("*")
+      // .eq("status", "published")
       .range(0, 10);
 
     if (error) {
