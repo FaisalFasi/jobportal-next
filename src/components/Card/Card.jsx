@@ -12,6 +12,9 @@ const Card = ({ job, isRecruiter }) => {
   const handleDelete = () => {
     console.log("delete");
   };
+  const handleConversation = () => {
+    console.log("conversation");
+  };
 
   return (
     <div
@@ -29,7 +32,13 @@ const Card = ({ job, isRecruiter }) => {
         </div>
         <div className="w-full flex justify-end text-end">
           {!isRecruiter ? (
-            <Button text={"Apply"} onClick={handleApply}></Button>
+            <>
+              <Button text={"Apply"} onClick={handleApply}></Button>
+              <Button
+                text={"Go To Conversation"}
+                onClick={handleConversation}
+              ></Button>
+            </>
           ) : (
             <div className="flex gap-4 ">
               <Button text={"Edit"} onClick={handleEdit}></Button>

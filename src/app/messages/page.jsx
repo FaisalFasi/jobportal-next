@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { getAllMyConversations } from "@/services/Messages";
+import FindPeople from "@/components/findPeople/FindPeople";
 
 const Page = () => {
   // useEffect(() => {
