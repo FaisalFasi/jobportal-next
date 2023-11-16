@@ -6,7 +6,7 @@ import { fetchMyProfile } from "../GlobalRedux/Features/profile/ProfileSlice";
 import { useSelector } from "react-redux";
 import Button from "@/components/Button/Button";
 
-const page = () => {
+const Page = () => {
   const dispatch = useDispatch();
 
   const loggedInUserId = useSelector((state) => state?.auth?.user?.user.id);
@@ -80,4 +80,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

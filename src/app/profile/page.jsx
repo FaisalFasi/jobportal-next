@@ -24,7 +24,7 @@ const professionalLinks = [
   },
 ];
 
-const page = () => {
+const Page = () => {
   const dispatch = useDispatch();
 
   const loggedInUserId = useSelector((state) => state?.auth?.user?.user?.id);
@@ -277,4 +277,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

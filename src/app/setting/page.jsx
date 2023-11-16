@@ -1,6 +1,6 @@
 import React from "react";
 
-const page = () => {
+const Page = () => {
   return (
     <div className="w-full min-h-screen bg-gray-100  md:p-4">
       <div className="px-6 md:px-0 pt-8">
@@ -42,7 +42,7 @@ const page = () => {
         <hr />
         <div className="pt-8">
           <p>
-            If you don't agree with the terms,{" "}
+            {`If you don't agree with the terms,`}
             <a href="" className="text-blue-800">
               delete your account.
             </a>
@@ -53,8 +53,7 @@ const page = () => {
   );
 };
 
-export default page;
-// <div className="w-full flex flex-col gap-4 ">
+export default Page; // <div className="w-full flex flex-col gap-4 ">
 //         <div className="flex flex-col md:flex-row gap-4 justify-between">
 //           <div>
 //             <h2 className="font-semibold text-lg">

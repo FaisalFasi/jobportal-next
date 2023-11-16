@@ -75,7 +75,7 @@ const Login = () => {
           <Button text="Log In with Github" />
         </div>
         <div className="flex flex-col gap-8 my-8 text-center">
-          <h2> Don't have an account?</h2>
+          <h2> {`Don't have an account?`}</h2>
           <Button
             onClick={() => console.log("Apply")}
             url={"/signup"}

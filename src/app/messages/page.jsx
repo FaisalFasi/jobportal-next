@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { getAllMyConversations } from "@/services/Messages";
 
-const page = () => {
+const Page = () => {
   // useEffect(() => {
   //   const getConversations = async () => {
   //     const { data, error } = await getAllMyConversations();
@@ -32,4 +32,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
