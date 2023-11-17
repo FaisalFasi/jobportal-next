@@ -10,12 +10,16 @@ const navbarLinks = [
   //   title: "Home",
   //   url: "/",
   // },
+  // {
+  //   id: 1,
+  //   title: "Applied Jobs",
+  //   url: "/appliedjobs",
+  // },
   {
     id: 1,
-    title: "Applied Jobs",
-    url: "/appliedjobs",
+    title: "Find People",
+    url: "/findpeople",
   },
-
   {
     id: 2,
     title: "Profile",
@@ -74,7 +78,7 @@ const Navbar = () => {
   return (
     <div>
       {/* Hey, welcome back {profile.username}! */}
-      <div className="fixed w-full flex justify-between  items-center top-0 px-4 py-8 bg-blue-300 ">
+      <div className="fixed w-full flex justify-between  items-center top-0 px-4 py-8 bg-blue-500 text-white font-bold text-md ">
         <div className="w-full flex justify-between items-center ">
           <div>
             {/* <Link href={"/"}>FR-Portal </Link>{" "} */}
@@ -92,19 +96,25 @@ const Navbar = () => {
 
         {isAuthenticated ? (
           <ul
-            className={`absolute md:static w-screen md:w-full h-screen md:h-full bg-red-400 md:bg-blue-300 opacity-80  md:opacity-100 z-50 md:z-10 left-0 py-20 md:py-0  flex-col flex md:flex-row md:justify-end items-center gap-6 whitespace-nowrap  ${
+            className={`absolute md:static w-screen md:w-full h-screen md:h-full bg-blue-500 md:bg-blue-500 opacity-90 text-white  md:opacity-100 z-50 md:z-10 left-0 py-20 md:py-0  flex-col flex md:flex-row md:justify-end items-center gap-6 whitespace-nowrap  transition-all duration-300 transform  ${
               isNavbarMenuOpen ? "top-0" : "top-[-1000px]"
-            }`}
+            }  `}
           >
             {user.email}
             {navbarLinks.map((link) => {
               return (
-                <li key={link.id} onClick={() => setIsnavbarMenuOpen(false)}>
+                <li
+                  key={link.id}
+                  className="hover:text-green-500"
+                  onClick={() => setIsnavbarMenuOpen(false)}
+                >
                   <Link href={link.url}>{link.title}</Link>
                 </li>
               );
             })}
-            <button onClick={handleLogOut}>Logout</button>
+            <button className="  hover:text-green-500" onClick={handleLogOut}>
+              Logout
+            </button>
           </ul>
         ) : (
           <div className="flex justify-end gap-8 w-full">

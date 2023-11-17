@@ -5,7 +5,7 @@ import { fetchJobs, fetchMyJobs } from "../GlobalRedux/Features/jobs/JobsSlice";
 import { fetchMyProfile } from "../GlobalRedux/Features/profile/ProfileSlice";
 import { useSelector } from "react-redux";
 import Card from "@/components/Card/Card";
-import FindPeople from "@/components/findPeople/FindPeople";
+import FindPeople from "@/app/findpeople/page";
 
 const Page = () => {
   const dispatch = useDispatch();

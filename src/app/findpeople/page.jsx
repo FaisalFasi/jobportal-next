@@ -1,7 +1,7 @@
 import React from "react";
 
-const FindPeople = () => {
+const Page = () => {
   return <div>Search People</div>;
 };
 
-export default FindPeople;
+export default Page;

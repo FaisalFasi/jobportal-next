@@ -119,7 +119,14 @@ const Page = () => {
               <h1 className="font-bold">Upload</h1>
             </div>
             <div>
-              <h3 className="font-bold">{updateUserData?.name}</h3>
+              <div className="font-bold flex gap-4">
+                {/* <label htmlFor="name">Name:</label>{" "} */}
+                <h3>
+                  {updateUserData.name.trim() != ""
+                    ? updateUserData.name
+                    : "please edit your info"}
+                </h3>
+              </div>
               <div className="">
                 <p>{updateUserData.email}</p>
                 <p>{updateUserData.phone}</p>
@@ -159,7 +166,7 @@ const Page = () => {
         ) : (
           <div className="w-full text-center ">
             <button
-              className="bg-gray-200 w-1/3 rounded"
+              className="bg-gray-300 w-1/3 rounded"
               onClick={toggleJobModal}
             >
               Post a Job

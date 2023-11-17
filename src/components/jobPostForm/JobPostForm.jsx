@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const JobPostForm = ({ onClose, onAddJob, loggedInUserId }) => {
   const [selectedOption, setSelectedOption] = useState("Select");
 
-  const [status, setStatus] = useState("Draft");
+  // const [status, setStatus] = useState("Draft");
   const [jobDetails, setJobDetails] = useState({
     // id: "",
     title: "",
@@ -15,6 +15,7 @@ const JobPostForm = ({ onClose, onAddJob, loggedInUserId }) => {
     language_required: "",
     salary: "",
     location: "",
+    status: "Draft",
   });
 
   const handleInputChange = (e) => {
@@ -140,7 +141,6 @@ const JobPostForm = ({ onClose, onAddJob, loggedInUserId }) => {
                   <input
                     type="radio"
                     value="Publish"
-                    checked={status === "Publish"}
                     onChange={() => handleToggle("Publish")}
                   />
                   <label> Publish</label>
@@ -149,7 +149,7 @@ const JobPostForm = ({ onClose, onAddJob, loggedInUserId }) => {
                   <input
                     type="radio"
                     value="Draft"
-                    checked={status === "Draft"}
+                    checked
                     onChange={() => handleToggle("Draft")}
                   />
                   <label>Draft</label>
