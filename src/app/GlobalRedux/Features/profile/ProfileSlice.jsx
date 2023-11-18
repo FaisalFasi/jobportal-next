@@ -51,6 +51,26 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
+export const fetchJobSeekers = createAsyncThunk(
+  "profiles/fetchJobSeekers",
+  async () => {
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("role", "jobseeker");
+
+      console.log("job seeker data: ", data);
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 export const ProfileSlice = createSlice({
   name: "profiles",
   initialState,
@@ -94,6 +114,20 @@ export const ProfileSlice = createSlice({
       .addCase(updateProfile.rejected, (state, action) => {
         state.loading = false;
         // console.log("action.error.message: ", action.error.message);
+        state.error = action.error.message;
+      })
+      .addCase(fetchJobSeekers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchJobSeekers.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log("action.payload: ", action.payload);
+        state.profiles = action.payload;
+        state.error = null;
+      })
+      .addCase(fetchJobSeekers.rejected, (state, action) => {
+        state.loading = false;
+        state.profiles = [];
         state.error = action.error.message;
       });
   },

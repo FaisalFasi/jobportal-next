@@ -57,7 +57,6 @@ export const signOut = createAsyncThunk("auth/signOut", async () => {
   if (error) {
     throw new Error(error.message);
   }
-  localStorage.removeItem("user");
 });
 
 // export const getUserData = createAsyncThunk("auth/getUserData", async () => {

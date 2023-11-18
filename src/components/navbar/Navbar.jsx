@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import React, { use, useEffect, useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut as logout } from "@/app/GlobalRedux/Features/auth/AuthSlice";
 const navbarLinks = [
@@ -46,38 +46,27 @@ const navbarLinks = [
 const Navbar = () => {
   const dispatch = useDispatch();
 
+  const navigate = useRouter();
   const isAuthenticated = useSelector((state) => state?.auth?.isAuthenticated);
   const user = useSelector((state) => state?.auth?.user);
 
   const [isNavbarMenuOpen, setIsnavbarMenuOpen] = useState(false);
-
-  // const error = useSelector((state) => state?.auth?.error);
 
   const openNavbarMenu = () => {
     setIsnavbarMenuOpen(!isNavbarMenuOpen);
   };
 
   const handleLogOut = async () => {
-    dispatch(logout());
+    await dispatch(logout());
+    navigate.push("/login");
   };
-
-  // useEffect(() => {
-  //   const asyncWrapper = async () => {
-  //     if (!user?.id) return;
-  //     const userProfile = await dispatch(fetchMyProfile(user?.id));
-  //     console.log("userProfile", userProfile);
-  //   };
-  //   asyncWrapper();
-  // }, [user]);
 
   useEffect(() => {
     setIsnavbarMenuOpen(false);
-    // console.log("Navbar: " + isNavbarMenuOpen);
   }, []);
 
   return (
     <div>
-      {/* Hey, welcome back {profile.username}! */}
       <div className="fixed w-full flex justify-between  items-center top-0 px-4 py-8 bg-blue-500 text-white font-bold text-md ">
         <div className="w-full flex justify-between items-center ">
           <div>
@@ -112,7 +101,7 @@ const Navbar = () => {
                 </li>
               );
             })}
-            <button className="  hover:text-green-500" onClick={handleLogOut}>
+            <button className=" hover:text-green-500" onClick={handleLogOut}>
               Logout
             </button>
           </ul>
@@ -122,7 +111,7 @@ const Navbar = () => {
               <Link href={"/login"}>Log In</Link>{" "}
             </button>
             <button>
-              <Link href={"/signup"}>Sign Up</Link>{" "}
+              <Link href={"/signup"}>Sign Up</Link>
             </button>
           </div>
         )}
