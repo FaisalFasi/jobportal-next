@@ -13,7 +13,7 @@ export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
     const { data, error } = await supabase
       .from("jobs")
       .select("*")
-      // .eq("status", "published")
+      .eq("status", "Publish")
       .range(0, 10);
 
     if (error) {
@@ -62,13 +62,45 @@ export const createJob = createAsyncThunk("jobs/createJob", async (jobData) => {
 
 export const updateJob = createAsyncThunk("jobs/updateJob", async (jobData) => {
   try {
-    console.log("Request Payload: ", [jobData]);
-    const { data, error } = await supabase.from("jobs").update(jobData);
-    console.log("Jobs Data: " + data);
+    const { error: upsertError } = await supabase
+      .from("jobs")
+      .upsert([jobData]);
+
+    if (upsertError) {
+      console.error("Supabase Upsert Error: ", upsertError);
+      throw upsertError;
+    }
+
+    // Fetch all jobs after the upsert
+    const { data: jobsData, error: fetchError } = await supabase
+      .from("jobs")
+      .select("*");
+
+    if (fetchError) {
+      console.error("Supabase Fetch Error: ", fetchError);
+      throw fetchError;
+    }
+
+    return jobsData;
+  } catch (error) {
+    throw error;
+  }
+});
+
+export const deleteJob = createAsyncThunk("jobs/deleteJob", async (jobData) => {
+  try {
+    console.log("jobData: ", jobData.id);
+    const { data, error } = await supabase
+      .from("jobs")
+      .delete()
+      .eq("id", jobData.id.toString())
+      .select("*");
 
     if (error) {
       console.error("Supabase Error: ", error);
+      throw error;
     }
+
     return data;
   } catch (error) {
     throw error;
@@ -120,6 +152,35 @@ const JobsSlice = createSlice({
       .addCase(fetchMyJobs.rejected, (state, action) => {
         state.loading = false;
         state.jobs = [];
+        state.error = action.error.message;
+      })
+      .addCase(updateJob.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateJob.fulfilled, (state, action) => {
+        state.loading = false;
+        state.jobs = action.payload;
+        state.error = null;
+      })
+      .addCase(updateJob.rejected, (state, action) => {
+        state.loading = false;
+        state.jobs = [];
+        state.error = action.error.message;
+      })
+
+      .addCase(deleteJob.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteJob.fulfilled, (state, action) => {
+        state.loading = false;
+        state.jobs = state.jobs.filter(
+          (job) => job.id !== action.payload[0].id
+        );
+        state.error = null;
+      })
+      .addCase(deleteJob.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.error.message;
       });
   },

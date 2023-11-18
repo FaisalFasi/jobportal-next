@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginWithEmailPassword } from "../GlobalRedux/Features/auth/AuthSlice";
 
 const Login = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const { loading, error } = useSelector((state) => state.auth);
@@ -70,15 +71,17 @@ const Login = () => {
           {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
         <h1 className="text-xl font-bold my-8 text-center">Or</h1>
-        <div className="flex flex-col gap-4 px-10">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-4 px-10">
           <Button text=" Log In with Google" />
           <Button text="Log In with Github" />
         </div>
-        <div className="flex flex-col gap-8 my-8 text-center">
+        <div className="flex flex-col items-center justify-center gap-8 my-8  ">
           <h2> {`Don't have an account?`}</h2>
           <Button
-            onClick={() => console.log("Apply")}
-            url={"/signup"}
+            onClick={() => {
+              router.push("/signup");
+            }}
+            // url={"/signup"}
             text="Sign Up"
           />
         </div>

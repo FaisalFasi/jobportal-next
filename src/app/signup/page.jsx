@@ -70,8 +70,8 @@ const SignUp = () => {
             />
             {/* radio group for role (jobseeker/recruiter) */}
 
-            <div className="flex  gap-8">
-              <div className=" flex gap-4">
+            <div className="flex  justify-center gap-8">
+              <div className=" flex justify-center gap-4">
                 <label htmlFor="jobseeker">Job Seeker</label>
                 <input
                   type="radio"
@@ -82,7 +82,7 @@ const SignUp = () => {
                   onChange={(e) => setRole(e.target.value)}
                 />
               </div>
-              <div className=" flex gap-4">
+              <div className=" flex justify-center gap-4">
                 <label htmlFor="recruiter">Recruiter</label>
                 <input
                   type="radio"

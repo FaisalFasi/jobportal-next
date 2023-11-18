@@ -1,44 +1,54 @@
-import React, { useEffect, useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-const JobPostForm = ({ onClose, onAddJob, loggedInUserId }) => {
-  const [selectedOption, setSelectedOption] = useState("Select");
+import {
+  createJob,
+  updateJob,
+} from "@/app/GlobalRedux/Features/jobs/JobsSlice";
 
-  // const [status, setStatus] = useState("Draft");
+const JobPostForm = ({ onClose, loggedInUserId, job }) => {
+  const dispatch = useDispatch();
+
+  const isUpdating = !!job?.id;
+
   const [jobDetails, setJobDetails] = useState({
-    // id: "",
-    title: "",
-    description: "",
-    recruiter_id: loggedInUserId.toString(),
-    email: "",
-    company_name: "",
-    company_url: "",
-    language_required: "",
-    salary: "",
-    location: "",
-    status: "Draft",
+    id: job?.id,
+    title: job?.title || "",
+    description: job?.description || "",
+    recruiter_id: job?.recruiter_id || loggedInUserId?.toString() || "",
+    email: job?.email || "",
+    company_name: job?.company_name || "",
+    company_url: job?.company_url || "",
+    language_required: job?.language_required || "",
+    salary: job?.salary || "",
+    location: job?.location || "",
+    status: job?.status || "Draft",
   });
 
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type } = e.target;
+
     setJobDetails((prevDetails) => ({
       ...prevDetails,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === "radio" ? value : value,
     }));
   };
 
-  const handleAddJob = () => {
-    onAddJob(jobDetails);
+  const handleAddJob = async () => {
+    await dispatch(createJob(jobDetails));
     onClose();
-
-    console.log("jobDetails: " + JSON.stringify(jobDetails));
   };
+
+  const updateJobDetails = async () => {
+    await dispatch(updateJob(jobDetails));
+    onClose();
+  };
+
   const handleWheel = (e) => {
     e.stopPropagation();
   };
 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
   return (
     <div className="fixed flex justify-center items-center top-0 w-full h-full bg-black bg-opacity-50 text-white overflow-hidden ">
       <div
@@ -140,17 +150,22 @@ const JobPostForm = ({ onClose, onAddJob, loggedInUserId }) => {
                 <div className="flex gap-4">
                   <input
                     type="radio"
-                    value="Publish"
-                    onChange={() => handleToggle("Publish")}
+                    id="Publish"
+                    name="status"
+                    value={"Publish"}
+                    checked={jobDetails.status === "Publish"}
+                    onChange={handleInputChange}
                   />
                   <label> Publish</label>
                 </div>
                 <div className="flex gap-4">
                   <input
                     type="radio"
-                    value="Draft"
-                    checked
-                    onChange={() => handleToggle("Draft")}
+                    id="Draft"
+                    name="status"
+                    value={"Draft"}
+                    checked={jobDetails.status === "Draft"}
+                    onChange={handleInputChange}
                   />
                   <label>Draft</label>
                 </div>
@@ -159,7 +174,7 @@ const JobPostForm = ({ onClose, onAddJob, loggedInUserId }) => {
             <div className="flex gap-8 justify-end">
               <button
                 className="bg-blue-500 text-white px-2 py-3 rounded"
-                onClick={handleAddJob}
+                onClick={isUpdating ? updateJobDetails : handleAddJob}
               >
                 Post Job
               </button>

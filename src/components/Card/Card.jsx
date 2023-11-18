@@ -1,20 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import Button from "../Button/Button";
+import { useDispatch } from "react-redux";
+import { deleteJob } from "../../app/GlobalRedux/Features/jobs/JobsSlice";
+
+import JobPostForm from "../jobPostForm/JobPostForm";
 const Card = ({ job, isRecruiter }) => {
+  const dispatch = useDispatch();
+
+  const [isEditing, setIsEditing] = useState(false);
+
   const handleApply = () => {
     const mailto = `mailto:${job.email}?compose=new"`;
     window.location.href = mailto;
   };
 
   const handleEdit = () => {
-    console.log("edit");
+    setIsEditing(!isEditing);
   };
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    await dispatch(deleteJob(job));
     console.log("delete");
   };
   const handleConversation = () => {
     console.log("conversation");
   };
+  useEffect(() => {
+    console.log("edit" + isEditing);
+  }, [isEditing]);
 
   return (
     <div
@@ -22,7 +35,6 @@ const Card = ({ job, isRecruiter }) => {
       className="flex flex-col sm:flex-row gap-6 items-start mt-8 bg-white shadow-md p-4 rounded-md"
     >
       <div> company icon</div>
-
       <div className="w-full flex flex-col gap-4 ">
         <div className="flex flex-col md:flex-row gap-4 justify-between">
           <div>
@@ -46,6 +58,9 @@ const Card = ({ job, isRecruiter }) => {
             </div>
           )}
         </div>
+      </div>
+      <div className="absolute left-0 w-full ">
+        {isEditing && <JobPostForm job={job} onClose={handleEdit} />}
       </div>
     </div>
   );

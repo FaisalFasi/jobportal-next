@@ -95,7 +95,7 @@ const Page = () => {
     console.log("add post details: ", jobDetails);
   };
   const toggleJobModal = () => {
-    setPostJobClicked(!postJobClicked);
+    setPostJobClicked((prevPostJobClicked) => !prevPostJobClicked);
   };
 
   return (

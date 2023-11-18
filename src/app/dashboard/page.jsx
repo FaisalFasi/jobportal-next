@@ -17,13 +17,12 @@ const Page = () => {
   const { jobs } = useSelector((state) => state.jobs);
 
   const [isRecruiter, setIsRecruiter] = useState(false);
-  console.log("jobs", jobs);
+
   useEffect(() => {
     const asyncWrapper = async () => {
       if (!loggedInUserId) return;
 
       await dispatch(fetchMyProfile(loggedInUserId));
-      console.log("loggedInUserId", loggedInUserId);
     };
     asyncWrapper();
   }, [loggedInUserId]);
@@ -41,7 +40,7 @@ const Page = () => {
       }
     };
     asyncWrapper();
-  }, [userProfile]);
+  }, [jobs, userProfile]);
 
   return (
     <div>
