@@ -7,6 +7,8 @@ import {
   fetchMyProfile,
   fetchRecruiters,
 } from "../GlobalRedux/Features/profile/ProfileSlice";
+import "@/app/globals.css";
+import Button from "@/components/Button/Button";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -71,17 +73,15 @@ const Page = () => {
           placeholder="Search by name"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border p-2 mr-2"
+          className="outline-gray-500 px-[16px] py-[10px]  mr-2 rounded-md"
         />
-        <button onClick={handleSearch} className="bg-blue-500 text-white p-2">
-          Search
-        </button>
+        <Button text={"Search"} onClick={handleSearch} />
       </div>
 
       {/* Display profiles */}
-      <div className="grid grid-cols-1 gap-4">
+      <div className="pt-8 grid grid-cols-1 gap-4">
         {filteredPeople.map((person) => (
-          <div key={person.id} className="bg-gray-200 p-4 rounded-md">
+          <div key={person.id} className="secondry-color p-4 rounded-md">
             <div
               onClick={() => handleCardClick(person.id)}
               className="cursor-pointer"
@@ -103,12 +103,11 @@ const Page = () => {
                   <p>Github: {person.skills || "empty"}</p>
                   <p>Portfolio Website: {person.skills || "empty"}</p>
                 </div>
-                <button
+                <Button
+                  className={"w-fit "}
+                  text={"Close"}
                   onClick={handleCloseButtonClick}
-                  className="w-fit mt-2 bg-red-500 text-white p-2"
-                >
-                  Close
-                </button>
+                />
               </div>
             )}
           </div>

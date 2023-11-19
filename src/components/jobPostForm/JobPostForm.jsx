@@ -7,6 +7,8 @@ import {
   updateJob,
 } from "@/app/GlobalRedux/Features/jobs/JobsSlice";
 
+import "@/app/globals.css";
+import Button from "../Button/Button";
 const JobPostForm = ({ onClose, loggedInUserId, job }) => {
   const dispatch = useDispatch();
 
@@ -52,7 +54,7 @@ const JobPostForm = ({ onClose, loggedInUserId, job }) => {
   return (
     <div className="fixed flex justify-center items-center top-0 w-full h-full bg-black bg-opacity-50 text-white overflow-hidden ">
       <div
-        className="h-[calc(100%-100px)] md:h-auto bg-gray-300 text-black m-8 rounded-md p-8  overflow-y-auto
+        className="h-[calc(100%-100px)] md:h-auto popup-color m-8 rounded-md p-8  overflow-y-auto
         "
         onWheel={handleWheel} // Prevent the wheel event from reaching elements behind the popup
       >
@@ -60,36 +62,33 @@ const JobPostForm = ({ onClose, loggedInUserId, job }) => {
           <div className="font-bold text-2xl">Add Job</div>
           <div className="flex flex-wrap items-start justify-around gap-4 mt-8 p-4  ">
             <div className=" w-full md:w-2/5 flex flex-col  items-start justify-start gap-4 ">
-              <label className=" text-gray-700 text-sm font-bold ">
-                Job Title:
-              </label>
+              <label className="  text-sm font-bold ">Job Title:</label>
               <input
                 type="text"
                 name="title"
+                placeholder="Enter job title"
                 value={jobDetails.title}
                 onChange={handleInputChange}
                 className=" w-full border p-2 rounded border-gray-600"
               />
             </div>
             <div className=" w-full md:w-2/5 flex flex-col  items-start justify-start gap-4 ">
-              <label className=" text-gray-700 text-sm font-bold ">
-                Email:
-              </label>
+              <label className="  text-sm font-bold ">Email:</label>
               <input
                 type="text"
                 name="email"
+                placeholder="Enter your email"
                 value={jobDetails.email}
                 onChange={handleInputChange}
                 className=" w-full border p-2 rounded border-gray-600"
               />
             </div>
             <div className=" w-full md:w-2/5 flex flex-col   items-start justify-start gap-4 ">
-              <label className=" text-gray-700 text-sm font-bold ">
-                Company Name:
-              </label>
+              <label className=" text-sm font-bold ">Company Name:</label>
               <input
                 type="text"
                 name="company_name"
+                placeholder="Enter company name"
                 value={jobDetails.company_name}
                 onChange={handleInputChange}
                 className=" w-full border p-2 rounded border-gray-600"
@@ -97,12 +96,11 @@ const JobPostForm = ({ onClose, loggedInUserId, job }) => {
             </div>
 
             <div className=" w-full md:w-2/5 flex flex-col  items-start justify-start gap-4 ">
-              <label className=" text-gray-700 text-sm font-bold ">
-                Language Required:
-              </label>
+              <label className="  text-sm font-bold ">Language Required:</label>
               <input
                 type="text"
                 name="language_required"
+                placeholder="Enter language required"
                 value={jobDetails.language_required}
                 onChange={handleInputChange}
                 className=" w-full border p-2 rounded border-gray-600"
@@ -110,12 +108,11 @@ const JobPostForm = ({ onClose, loggedInUserId, job }) => {
             </div>
 
             <div className=" w-full md:w-2/5 flex flex-col  items-start justify-start gap-4 ">
-              <label className=" text-gray-700 text-sm font-bold ">
-                Company URL:
-              </label>
+              <label className="  text-sm font-bold ">Company URL:</label>
               <input
                 type="text"
                 name="company_url"
+                placeholder="Enter company url"
                 value={jobDetails.company_url}
                 onChange={handleInputChange}
                 className=" w-full border p-2 rounded border-gray-600"
@@ -123,23 +120,21 @@ const JobPostForm = ({ onClose, loggedInUserId, job }) => {
             </div>
 
             <div className=" w-full md:w-2/5 flex flex-col  items-start justify-start gap-4 ">
-              <label className=" text-gray-700 text-sm font-bold ">
-                Location:
-              </label>
+              <label className="  text-sm font-bold ">Location:</label>
               <input
                 type="text"
                 name="location"
+                placeholder="Enter location"
                 value={jobDetails.location}
                 onChange={handleInputChange}
                 className=" w-full border p-2 rounded border-gray-600"
               />
             </div>
             <div className=" w-full  flex flex-col  items-start justify-start gap-4  md:mx-20 ">
-              <label className=" text-gray-700 text-sm font-bold ">
-                Job Description:
-              </label>
+              <label className="  text-sm font-bold ">Job Description:</label>
               <textarea
                 name="description"
+                placeholder="Enter job description"
                 value={jobDetails.description}
                 onChange={handleInputChange}
                 className=" w-full border p-2 rounded border-gray-600 "
@@ -172,18 +167,11 @@ const JobPostForm = ({ onClose, loggedInUserId, job }) => {
               </div>
             </div>
             <div className="flex gap-8 justify-end">
-              <button
-                className="bg-blue-500 text-white px-2 py-3 rounded"
+              <Button
+                text={"Post Job"}
                 onClick={isUpdating ? updateJobDetails : handleAddJob}
-              >
-                Post Job
-              </button>
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded"
-                onClick={onClose}
-              >
-                Cancel
-              </button>
+              />
+              <Button text={"Cancel"} onClick={onClose} />
             </div>
           </div>
         </div>

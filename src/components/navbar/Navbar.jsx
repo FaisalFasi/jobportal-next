@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut as logout } from "@/app/GlobalRedux/Features/auth/AuthSlice";
+import "@/app/globals.css";
 const navbarLinks = [
   {
     id: 1,
@@ -57,15 +58,14 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className="fixed w-full flex justify-between  items-center top-0 px-4 py-8 bg-blue-500 text-white font-bold text-md ">
+      <div className="fixed w-full flex justify-between  items-center top-0 px-4 py-8 theme-color font-bold text-md ">
         <div className="w-full flex justify-between items-center ">
           <div>
-            {/* <Link href={"/"}>FR-Portal </Link>{" "} */}
             <h1>FR-Portal </h1>
           </div>
           {isAuthenticated && (
             <button
-              className=" absolute top-0 right-0 px-4 pt-7 md:hidden z-[100] text-2xl"
+              className=" absolute top-0 right-0 px-4 pt-7 md:hidden z-[100] text-2xl hover:opacity-50"
               onClick={() => openNavbarMenu()}
             >
               {isNavbarMenuOpen ? "x" : "☰"}
@@ -75,7 +75,7 @@ const Navbar = () => {
 
         {isAuthenticated ? (
           <ul
-            className={`absolute md:static w-screen md:w-full h-screen md:h-full bg-blue-500 md:bg-blue-500 opacity-90 text-white  md:opacity-100 z-50 md:z-10 left-0 py-20 md:py-0  flex-col flex md:flex-row md:justify-end items-center gap-6 whitespace-nowrap  transition-all duration-300 transform text-xl md:text-base ${
+            className={`absolute md:static w-screen md:w-full h-screen md:h-full theme-color  opacity-90  md:opacity-100 z-50 md:z-10 left-0 py-20 md:py-0  flex-col flex md:flex-row md:justify-end items-center gap-6 whitespace-nowrap  transition-all duration-300 transform text-xl md:text-base ${
               isNavbarMenuOpen ? "top-0" : "top-[-1000px]"
             }  `}
           >
@@ -84,14 +84,14 @@ const Navbar = () => {
               return (
                 <li
                   key={link.id}
-                  className="hover:text-green-500"
+                  className="hover:opacity-50"
                   onClick={() => setIsnavbarMenuOpen(false)}
                 >
                   <Link href={link.url}>{link.title}</Link>
                 </li>
               );
             })}
-            <button className=" hover:text-green-500" onClick={handleLogOut}>
+            <button className=" hover:text-red-500" onClick={handleLogOut}>
               Logout
             </button>
           </ul>

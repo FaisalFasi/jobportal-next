@@ -42,7 +42,7 @@ const Card = ({ job, isRecruiter }) => {
             <p className="text-sm">{job.company_name}</p>
           </div>
         </div>
-        <div className="w-full flex justify-end text-end">
+        <div className="w-full flex gap-4 justify-end text-end">
           {!isRecruiter ? (
             <>
               <Button text={"Apply"} onClick={handleApply}></Button>

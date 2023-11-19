@@ -1,3 +1,61 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-color: #ecf0f1; /* Clouds or a light neutral color */
+  color: #333; /* Dark Gray for text */
+}
+
+.banner-bg {
+  background-color: #3498db; /* Belize Hole or a color that complements your brand */
+}
+
+.banner-text {
+  color: #fff; /* White or a contrasting color for text on the banner */
+}
+
+/* Card Background Color */
+.card-bg {
+  background-color: #f2f2f2; /* Slightly different shade than body background */
+}
+
+/* Card Text Color */
+.card-text {
+  color: #333; /* Dark Gray for text */
+}
+
+.theme-color {
+  background-color: #66666e;
+  color: #f2f2f2;
+}
+
+.secondry-color {
+  background-color: #66666e; /* Light gray background */
+  color: #f5f5f5; /* Slightly off-white text color */
+}
+.test-bg-2 {
+  background-color: #001f3f;
+  color: #f2f2f2;
+}
+.popup-color {
+  background-color: #626368;
+  color: #f2f2f2;
+}
+.popup-color input,
+.popup-color textarea {
+  color: black;
+}
+
+.btn-style {
+  background-color: #3498db; /* Blue background color */
+  color: #ffffff; /* White text color */
+  padding: 8px 16px; /* Adjust padding as needed */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.btn-style:hover {
+  background-color: #2c3e50; /* Darker blue on hover */
+}

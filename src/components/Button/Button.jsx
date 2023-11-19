@@ -1,11 +1,8 @@
 import React from "react";
-
-const Button = ({ text, onClick }) => {
+import "@/app/globals.css";
+const Button = ({ text, onClick, className }) => {
   return (
-    <button
-      className={`w-fit py-2 px-8 text-center bg-blue-500 text-white rounded-md `}
-      onClick={onClick}
-    >
+    <button className={`btn-style font-bold ${className} `} onClick={onClick}>
       {text}
     </button>
   );
