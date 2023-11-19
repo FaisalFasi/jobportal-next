@@ -16,9 +16,6 @@ const SignUp = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    // console.log("userEmail: ", userEmail);
-    // console.log("password: ", password);
-    // console.log("role: ", role);
 
     dispatch(signUp({ email: userEmail, password, role }));
   };

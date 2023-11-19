@@ -5,41 +5,31 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut as logout } from "@/app/GlobalRedux/Features/auth/AuthSlice";
 const navbarLinks = [
-  // {
-  //   id: 1,
-  //   title: "Home",
-  //   url: "/",
-  // },
-  // {
-  //   id: 1,
-  //   title: "Applied Jobs",
-  //   url: "/appliedjobs",
-  // },
   {
     id: 1,
-    title: "Find People",
-    url: "/findpeople",
+    title: "Dashboard",
+    url: "/dashboard",
   },
   {
     id: 2,
     title: "Profile",
     url: "/profile",
   },
-
   {
     id: 3,
+    title: "Find People",
+    url: "/findpeople",
+  },
+
+  {
+    id: 4,
     title: "Messages",
     url: "/messages",
   },
   {
-    id: 4,
+    id: 5,
     title: "Setting",
     url: "/setting",
-  },
-  {
-    id: 5,
-    title: "Dashboard",
-    url: "/dashboard",
   },
 ];
 
@@ -85,7 +75,7 @@ const Navbar = () => {
 
         {isAuthenticated ? (
           <ul
-            className={`absolute md:static w-screen md:w-full h-screen md:h-full bg-blue-500 md:bg-blue-500 opacity-90 text-white  md:opacity-100 z-50 md:z-10 left-0 py-20 md:py-0  flex-col flex md:flex-row md:justify-end items-center gap-6 whitespace-nowrap  transition-all duration-300 transform  ${
+            className={`absolute md:static w-screen md:w-full h-screen md:h-full bg-blue-500 md:bg-blue-500 opacity-90 text-white  md:opacity-100 z-50 md:z-10 left-0 py-20 md:py-0  flex-col flex md:flex-row md:justify-end items-center gap-6 whitespace-nowrap  transition-all duration-300 transform text-xl md:text-base ${
               isNavbarMenuOpen ? "top-0" : "top-[-1000px]"
             }  `}
           >

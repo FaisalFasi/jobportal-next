@@ -28,9 +28,7 @@ export const signUp = createAsyncThunk(
       .insert([{ user_id: data.user.id, role }])
       .single()
       .select("*");
-
-    // A "user/human-being" has an entry in the user table and the profiles table.
-
+    console.log("Sign up profileData: ", profileData);
     return data.user;
   }
 );
@@ -58,22 +56,6 @@ export const signOut = createAsyncThunk("auth/signOut", async () => {
     throw new Error(error.message);
   }
 });
-
-// export const getUserData = createAsyncThunk("auth/getUserData", async () => {
-//   try {
-//     const { data, error } = await supabase.auth.getUser();
-//     const user = data.user;
-
-//     console.log("user: ", user);
-
-//     if (error) {
-//       throw new Error(error.message);
-//     }
-//     return user;
-//   } catch (error) {
-//     console.log("error: ", error);
-//   }
-// });
 
 export const fetchUserData = createAsyncThunk(
   "auth/fetchUserData",
@@ -120,12 +102,7 @@ const AuthSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.isAuthenticated = true;
-        // console.log("action.payload: ", action.payload);
-        // console.log("isAuthenticated ", state.isAuthenticated);
         state.user = action.payload;
-
-        // Store user data in local storage
-        localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(loginWithEmailPassword.rejected, (state, action) => {
         state.loading = false;
@@ -164,12 +141,6 @@ const AuthSlice = createSlice({
         state.isAuthenticated = false;
         state.error = action.error.message;
       });
-    // .addCase(getSession.fulfilled, (state, action) => {
-    //   state.loading = false;
-    //   state.user = action.payload;
-    //   state.isAuthenticated = true;
-    //   state.error = null;
-    // });
   },
 });
 

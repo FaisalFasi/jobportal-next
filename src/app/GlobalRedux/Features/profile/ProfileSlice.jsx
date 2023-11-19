@@ -21,7 +21,7 @@ export const fetchMyProfile = createAsyncThunk(
       if (error) {
         throw new Error(error.message);
       }
-
+      console.log("data: ", data);
       return data;
     } catch (error) {
       throw error;
@@ -60,6 +60,26 @@ export const fetchJobSeekers = createAsyncThunk(
         .select("*")
         .eq("role", "jobseeker");
 
+      // console.log("job seeker data: ", data);
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const fetchRecruiters = createAsyncThunk(
+  "profiles/fetchRecruiters",
+  async () => {
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("role", "recruiter");
+
       console.log("job seeker data: ", data);
       if (error) {
         throw new Error(error.message);
@@ -83,7 +103,8 @@ export const ProfileSlice = createSlice({
       .addCase(fetchMyProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.profiles = action.payload;
-
+        state.currentUser = action.payload;
+        console.log("state.currentUser: ", state.currentUser);
         state.error = null;
         // console.log("state: ", state.profiles);
       })
@@ -126,6 +147,19 @@ export const ProfileSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchJobSeekers.rejected, (state, action) => {
+        state.loading = false;
+        state.profiles = [];
+        state.error = action.error.message;
+      })
+      .addCase(fetchRecruiters.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchRecruiters.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profiles = action.payload;
+        state.error = null;
+      })
+      .addCase(fetchRecruiters.rejected, (state, action) => {
         state.loading = false;
         state.profiles = [];
         state.error = action.error.message;
