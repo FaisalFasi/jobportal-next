@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut as logout } from "@/app/GlobalRedux/Features/auth/AuthSlice";
 import "@/app/globals.css";
+import { ToastContainer } from "react-toast";
+
 const navbarLinks = [
   {
     id: 1,
@@ -106,6 +108,7 @@ const Navbar = () => {
           </div>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

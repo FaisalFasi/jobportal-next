@@ -8,6 +8,32 @@ const initialState = {
   loading: false,
   error: null,
 };
+
+export const searchJobs = createAsyncThunk(
+  "jobs/searchJobs",
+
+  async (searchTerm) => {
+    try {
+      const { data, error } = await supabase
+        .from("jobs")
+        .select("*")
+        .filter(
+          "title_description_location_company",
+          "ilike",
+          `%${searchTerm}%`
+        );
+
+      console.log("data: ", data);
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
   try {
     const { data, error } = await supabase
@@ -181,6 +207,20 @@ const JobsSlice = createSlice({
       })
       .addCase(deleteJob.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.error.message;
+      })
+
+      .addCase(searchJobs.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(searchJobs.fulfilled, (state, action) => {
+        state.loading = false;
+        state.jobs = action.payload;
+        state.error = null;
+      })
+      .addCase(searchJobs.rejected, (state, action) => {
+        state.loading = false;
+        state.jobs = [];
         state.error = action.error.message;
       });
   },

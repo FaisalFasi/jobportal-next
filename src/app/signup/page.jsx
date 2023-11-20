@@ -4,6 +4,7 @@ import Button from "../../components/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../GlobalRedux/Features/auth/AuthSlice";
 import { useRouter } from "next/navigation";
+import { Toast } from "react-toast";
 
 import { useState } from "react";
 const SignUp = () => {
@@ -17,7 +18,15 @@ const SignUp = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
-    dispatch(signUp({ email: userEmail, password, role }));
+    const { data, error } = await dispatch(
+      signUp({ email: userEmail, password, role })
+    );
+    if (error) {
+      Toast("something went wrong please try again ");
+    }
+    if (data) {
+      Toast("please confirm your email ");
+    }
   };
 
   useEffect(() => {

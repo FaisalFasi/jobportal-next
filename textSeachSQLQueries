@@ -1,0 +1,31 @@
+create function title_description_location_company(books) returns text as $$
+  select $1.title || ' ' || $1.description || $1.location || $1.company;
+$$ language sql immutable;
+
+
+const { data, error } = await supabase
+  .from('jobs')
+  .select()
+  .textSearch('Title_description_location_company', `little`)
+
+// Language: sql
+  select
+  *
+from
+  jobs
+where
+  to_tsvector(Title_description_location_company)
+  @@ to_tsquery('backend');  
+
+
+// how to create postgres search function with multiple columns (Postgres textSearch)
+  CREATE OR REPLACE FUNCTION title_description_location_company(jobs, text) RETURNS boolean AS $$
+  SELECT 
+    ($1.title || ' ' || $1.description || ' ' || $1.location || ' ' || $1.company_name) ILIKE '%' || $2 || '%';
+$$ LANGUAGE sql IMMUTABLE;
+
+// how to search 
+
+SELECT *
+FROM jobs
+WHERE title_description_location_company(jobs, 'test');
