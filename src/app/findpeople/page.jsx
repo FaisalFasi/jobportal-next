@@ -9,6 +9,7 @@ import {
 } from "../GlobalRedux/Features/profile/ProfileSlice";
 import "@/app/globals.css";
 import Button from "@/components/Button/Button";
+import Search from "@/components/search/Search";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -66,7 +67,7 @@ const Page = () => {
   };
 
   return (
-    <div className="px-2 md:px-8 mx-auto mt-8">
+    <div className="px-2 md:px-8 mx-auto my-8">
       {/* Search input */}
       <div className="mb-4">
         <input

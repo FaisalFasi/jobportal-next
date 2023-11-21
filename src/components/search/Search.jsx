@@ -16,13 +16,13 @@ const Search = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="mb-4">
+      <div className="py-4">
         <input
           type="text"
           placeholder="Search by name"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="outline-gray-500 px-[16px] py-[10px]  mr-2 rounded-md"
+          className="px-[16px] py-[10px] mr-2 rounded-md"
         />
         <Button text={"Search"} />
       </div>

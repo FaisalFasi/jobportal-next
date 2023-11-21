@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 body {
-  background-color: #ecf0f1; /* Clouds or a light neutral color */
-  color: #333; /* Dark Gray for text */
+  background-color: #ecf0f1;
+  color: #333;
 }
 
-.banner-bg {
-  background-color: #3498db; /* Belize Hole or a color that complements your brand */
+/* .banner-bg {
+  background-color: #3498db;
 }
 
 .banner-text {
-  color: #fff; /* White or a contrasting color for text on the banner */
-}
+  color: #fff;
+} */
 
 /* Card Background Color */
 .card-bg {
@@ -26,7 +26,7 @@ body {
 }
 
 .theme-color {
-  background-color: #66666e;
+  background-color: #626368;
   color: #f2f2f2;
 }
 

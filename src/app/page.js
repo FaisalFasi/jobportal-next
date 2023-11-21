@@ -2,26 +2,31 @@
 import { useState } from "react";
 import { fetchJobs } from "./GlobalRedux/Features/jobs/JobsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Card from "@/components/Card/Card";
+import Search from "@/components/search/Search";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const jobs = useSelector((state) => state.jobs);
+  const jobs = useSelector((state) => state.jobs.jobs);
 
   useState(() => {
-    const jobs = async () => {
+    const wrapper = async () => {
       if (jobs.length > 0) return;
-      await dispatch(fetchJobs(jobs));
+      await dispatch(fetchJobs());
     };
-    dispatch(fetchJobs());
+    wrapper();
+    // dispatch(fetchJobs());
   }, []);
-  console.log(jobs);
+  console.log(jobs.jobs);
 
   return (
-    <main>
-      <div className="w-full h-full flex flex-col py-10">
-        <div>
-          <h1 className="text-center font-bold text-2xl"> All Jobs</h1>
-        </div>
+    <main className="w-full min-h-screen p-8">
+      <Search />
+      <div>
+        {jobs?.map((job, idx) => (
+          <Card key={idx} job={job} />
+          // <Card key={idx} job={job} isRecruiter={isRecruiter} /> its same like above
+        ))}
       </div>
     </main>
   );

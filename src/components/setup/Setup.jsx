@@ -1,10 +1,10 @@
 "use client";
+// Import necessary dependencies
 import React, { useEffect } from "react";
-// import { getMyProfile } from "@/services/Auth";
 import { useRouter } from "next/navigation";
-
-import { fetchUserData } from "@/app/GlobalRedux/Features/auth/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchUserData } from "@/app/GlobalRedux/Features/auth/AuthSlice";
+
 const Setup = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -12,22 +12,31 @@ const Setup = () => {
 
   useEffect(() => {
     const asyncWrapper = async () => {
-      const session = await dispatch(fetchUserData());
-      const logged_in = session?.payload?.access_token;
+      try {
+        // Wait for the fetchUserData action to complete
+        await dispatch(fetchUserData());
 
-      const protected_urls = ["/dashboard", "/profile", "/messages"];
-      const not_logged_in_urls = ["/login"];
+        const logged_in = isAuthenticated;
 
-      if (!logged_in && protected_urls.includes(window.location.pathname)) {
-        router.push("/login");
-      }
+        // const protected_urls = ["/dashboard", "/profile", "/messages"];
 
-      if (logged_in && not_logged_in_urls.includes(window.location.pathname)) {
-        router.push("/dashboard");
+        // const protected_urls = ["/dashboard"];
+        const not_logged_in_urls = ["/", "/login", "/signup"];
+
+        if (!logged_in && not_logged_in_urls.includes(router.pathname)) {
+          router.push("/");
+        }
+
+        if (logged_in && not_logged_in_urls.includes(router.pathname)) {
+          router.push("/dashboard");
+        }
+      } catch (error) {
+        console.error("Error checking authentication:", error);
       }
     };
+
     asyncWrapper();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, router]);
 
   return <div></div>;
 };

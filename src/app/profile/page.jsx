@@ -139,12 +139,12 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className="h-full w-full flex justify-center items-center">
+      <div className=" h-full w-full flex justify-center items-center">
         {getUserProfile?.role === "jobseeker" ? (
           <div className="secondry-color w-full md:w-1/2 h-1/2 m-4 p-4  flex flex-col items-start rounded-md">
             <div className=" h-full w-full flex justify-center items-center">
               {getUserProfile?.role === "jobseeker" ? (
-                <div className="w-full md:w-1/2 h-1/2 m-4 p-4  flex flex-col items-start ">
+                <div className=" w-full  h-1/2 m-4 p-4  flex flex-col items-start ">
                   <div>
                     <h1 className="text-xl font-semibold"> CV</h1>
                   </div>
@@ -156,13 +156,13 @@ const Page = () => {
                     </p>
                     <div className="flex gap-4 items-center p-4 mt-4 border-2 border-gray-200 shadow-lg  rounded-md ">
                       <div>icon</div>
-                      <div className="w-full flex justify-between">
+                      <div className="w-full flex gap-4 justify-between">
                         <div>
                           <h2>CV</h2>
                           <p>name of uploaded cv i.e(Faisal_CV.pdf)</p>
                         </div>
                         <div className="flex flex-col">
-                          <button>watch</button>
+                          <button>download</button>
                           <button>delete</button>
                         </div>
                       </div>

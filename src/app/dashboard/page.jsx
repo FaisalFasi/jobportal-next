@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchJobs, fetchMyJobs } from "../GlobalRedux/Features/jobs/JobsSlice";
 import { fetchMyProfile } from "../GlobalRedux/Features/profile/ProfileSlice";
@@ -35,8 +35,9 @@ const Page = () => {
 
   return (
     <div>
-      <Search />
-      <div className="w-full min-h-screen bg-gray-100 p-8">
+      <div className="w-full min-h-screen p-8">
+        <Search />
+
         <div className="pt-4">
           <div>
             <h1 className="text-center font-bold text-2xl">
@@ -48,7 +49,7 @@ const Page = () => {
           <div>
             {jobs?.filter((job) => job.status === "Draft").length > 0 ? (
               <div>
-                <h1>Drafts</h1>
+                <h1 className="text-lg font-bold pt-8">Drafts</h1>
                 <div>
                   {jobs
                     .filter((job) => job.status === "Draft")
@@ -63,7 +64,7 @@ const Page = () => {
 
             {jobs?.filter((job) => job.status === "Publish").length > 0 ? (
               <div>
-                <h1>Published</h1>
+                <h1 className="text-lg font-bold pt-8">Published</h1>
                 <div>
                   {jobs
                     .filter((job) => job.status === "Publish")
@@ -80,6 +81,7 @@ const Page = () => {
           <div>
             {jobs?.map((job, idx) => (
               <Card key={idx} {...{ job, isRecruiter }} />
+              // <Card key={idx} job={job} isRecruiter={isRecruiter} /> its same like above
             ))}
           </div>
         )}
@@ -89,60 +91,3 @@ const Page = () => {
 };
 
 export default Page;
-
-// "use client";
-// import React, { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { fetchJobs, fetchMyJobs } from "../GlobalRedux/Features/jobs/JobsSlice";
-// import { fetchMyProfile } from "../GlobalRedux/Features/profile/ProfileSlice";
-// import Card from "@/components/Card/Card";
-
-// const Page = () => {
-//   const dispatch = useDispatch();
-//   const loggedInUserId = useSelector((state) => state?.auth?.user?.user.id);
-//   const userProfile = useSelector((state) => state?.profiles?.profiles[0]);
-//   const { jobs } = useSelector((state) => state.jobs);
-//   const [isRecruiter, setIsRecruiter] = useState(false);
-
-//   useEffect(() => {
-//     (async () => {
-//       if (loggedInUserId) {
-//         await dispatch(fetchMyProfile(loggedInUserId));
-//       }
-//     })();
-//   }, [loggedInUserId]);
-
-//   useEffect(() => {
-//     (async () => {
-//       if (userProfile) {
-//         if (userProfile.role === "recruiter") {
-//           await dispatch(fetchMyJobs(loggedInUserId));
-//           setIsRecruiter(true);
-//         } else {
-//           await dispatch(fetchJobs());
-//           setIsRecruiter(false);
-//           console.log("userProfile?.role", userProfile.role);
-//         }
-//       }
-//     })();
-//   }, [jobs, userProfile]);
-
-//   return (
-//     <div>
-//       <div className="w-full min-h-screen bg-gray-100 p-8">
-//         <div className="pt-4">
-//           <div>
-//             <h1 className="text-center font-bold text-2xl">
-//               {isRecruiter ? "Your Jobs" : "All Jobs"}
-//             </h1>
-//           </div>
-//         </div>
-//         {jobs?.map((job, idx) => (
-//           <Card key={idx} {...{ job, isRecruiter }} />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Page;
