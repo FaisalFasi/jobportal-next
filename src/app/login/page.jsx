@@ -5,7 +5,10 @@ import { useRouter } from "next/navigation";
 
 import { useDispatch, useSelector } from "react-redux";
 import { loginWithEmailPassword } from "../GlobalRedux/Features/auth/AuthSlice";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+// import Test from "@/components/Test";
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -21,7 +24,13 @@ const Login = () => {
       await dispatch(
         loginWithEmailPassword({ email: userEmail, password: password })
       );
+      if (loading) {
+        toast.success("Logged in successfully");
+      }
+      console.log("userEmail: ", userEmail);
     } catch (error) {
+      toast.error(" Error during login ", error);
+
       console.log("error: ", error.message);
     }
   };
@@ -85,6 +94,8 @@ const Login = () => {
             text="Sign Up"
           />
         </div>
+        {/* <Test /> */}
+        <ToastContainer />
       </div>
     </div>
   );

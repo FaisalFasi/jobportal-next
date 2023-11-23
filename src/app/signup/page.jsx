@@ -4,7 +4,7 @@ import Button from "../../components/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../GlobalRedux/Features/auth/AuthSlice";
 import { useRouter } from "next/navigation";
-import { Toast } from "react-toast";
+import { toast } from "react-toastify";
 
 import { useState } from "react";
 const SignUp = () => {
@@ -15,17 +15,25 @@ const SignUp = () => {
   const [role, setRole] = useState("jobseeker");
   const { user } = useSelector((state) => state.auth);
 
+  // const notify = (text) => toast(text);
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
-    const { data, error } = await dispatch(
-      signUp({ email: userEmail, password, role })
-    );
-    if (error) {
-      Toast("something went wrong please try again ");
-    }
-    if (data) {
-      Toast("please confirm your email ");
+    try {
+      const { data } = await dispatch(
+        signUp({ email: userEmail, password, role })
+      );
+
+      // If data is received, show success message
+      if (data) {
+        console.log("data: ", data);
+        toast.success("Please confirm your email");
+      }
+    } catch (error) {
+      // If there's an error, show an error message
+      console.error("Error during sign-up:", error);
+      toast.error("An error occurred during sign-up. Please try again.");
     }
   };
 
@@ -36,9 +44,9 @@ const SignUp = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    console.log("role: ", role);
-  }, [role]);
+  // useEffect(() => {
+  //   console.log("role: ", role);
+  // }, [role]);
 
   return (
     <div className="w-full flex justify-center ">
@@ -70,6 +78,7 @@ const SignUp = () => {
               type="password"
               id="password"
               placeholder="Password"
+              autoComplete="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="border w-full p-2"

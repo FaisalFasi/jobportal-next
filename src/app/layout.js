@@ -1,11 +1,13 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import Setup from "@/components/setup/Setup";
 import { Providers } from "./GlobalRedux/Features/provider";
 
 const inter = Inter({ subsets: ["latin"] });
+import { ToastContainer } from "react-toastify";
 
 export const metadata = {
   title: "Create Next App",

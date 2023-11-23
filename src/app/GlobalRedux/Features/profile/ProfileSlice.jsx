@@ -13,6 +13,10 @@ export const fetchMyProfile = createAsyncThunk(
   "profiles/fetchMyProfile",
   async (loggedInUserId) => {
     try {
+      if (loggedInUserId == null) {
+        throw new Error("User ID is null or undefined");
+      }
+
       let { data, error } = await supabase
         .from("profiles")
         .select("*")
@@ -24,7 +28,7 @@ export const fetchMyProfile = createAsyncThunk(
       console.log("data: ", data);
       return data;
     } catch (error) {
-      throw error;
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -111,7 +115,9 @@ export const ProfileSlice = createSlice({
       .addCase(fetchMyProfile.rejected, (state, action) => {
         state.loading = false;
         state.profiles = [];
-        state.error = action.error.message;
+        state.error = action.payload; // Now payload contains the error message
+
+        // state.error = action.error.message;
       })
 
       .addCase(updateProfile.pending, (state) => {

@@ -100,7 +100,7 @@ const Page = () => {
   return (
     <div>
       <div className=" h-full w-full md:w-2/3 flex justify-center items-center m-auto">
-        <div className="secondry-color w-full m-4 p-4   flex flex-col items-center gap-10 rounded-md">
+        <div className="profile-bg w-full m-4 p-4   flex flex-col items-center gap-10 rounded-md">
           <div className="w-full flex justify-between">
             <h1 className="font-bold text-xl">Profile</h1>
             <button
@@ -141,7 +141,7 @@ const Page = () => {
       </div>
       <div className=" h-full w-full flex justify-center items-center">
         {getUserProfile?.role === "jobseeker" ? (
-          <div className="secondry-color w-full md:w-1/2 h-1/2 m-4 p-4  flex flex-col items-start rounded-md">
+          <div className="profile-bg w-full md:w-1/2 h-1/2 m-4 p-4  flex flex-col items-start rounded-md">
             <div className=" h-full w-full flex justify-center items-center">
               {getUserProfile?.role === "jobseeker" ? (
                 <div className=" w-full  h-1/2 m-4 p-4  flex flex-col items-start ">
@@ -189,7 +189,7 @@ const Page = () => {
         ) : (
           <div className="w-full text-center">
             <button
-              className="secondry-color font-bold w-1/3 py-2 rounded-md"
+              className="profile-bg font-bold w-1/3 py-2 rounded-md"
               onClick={toggleJobModal}
             >
               Post a Job or Internship
@@ -206,7 +206,7 @@ const Page = () => {
         )}
       </div>
       <div className=" h-full w-full flex justify-center items-center">
-        <div className=" secondry-color w-full md:w-1/2 h-1/2 m-4 p-4  flex flex-col items-start gap-10 rounded-md">
+        <div className=" profile-bg w-full md:w-1/2 h-1/2 m-4 p-4  flex flex-col items-start gap-10 rounded-md">
           <div className=" w-full flex justify-between">
             <h1 className="font-semibold text-xl">Professional Links</h1>
             <button> Edit</button>

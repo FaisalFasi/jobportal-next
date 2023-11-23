@@ -1,18 +1,23 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import Button from "../Button/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteJob } from "../../app/GlobalRedux/Features/jobs/JobsSlice";
-
 import JobPostForm from "../jobPostForm/JobPostForm";
+
 const Card = ({ job, isRecruiter }) => {
   const dispatch = useDispatch();
+  const loggedInUserId = useSelector((state) => state?.auth?.user?.user.id);
 
   const [isEditing, setIsEditing] = useState(false);
 
   const handleApply = () => {
-    const mailto = `mailto:${job.email}?compose=new"`;
-    window.location.href = mailto;
+    if (!loggedInUserId) {
+      alert("Please login to apply for this job");
+    } else {
+      const mailto = `mailto:${job.email}?compose=new"`;
+      window.location.href = mailto;
+    }
   };
 
   const handleEdit = () => {
@@ -25,9 +30,9 @@ const Card = ({ job, isRecruiter }) => {
   const handleConversation = () => {
     console.log("conversation");
   };
-  useEffect(() => {
-    console.log("edit" + isEditing);
-  }, [isEditing]);
+  // useEffect(() => {
+  //   console.log("edit" + isEditing);
+  // }, [isEditing]);
 
   return (
     <div
@@ -47,9 +52,12 @@ const Card = ({ job, isRecruiter }) => {
             <>
               <Button text={"Apply"} onClick={handleApply}></Button>
               <Button
+                className={
+                  " bg-gray-400 hover:cursor-not-allowed hover:bg-gray-400"
+                }
                 text={"Go To Conversation"}
-                onClick={handleConversation}
-              ></Button>
+                // onClick={handleConversation}
+              ></Button>{" "}
             </>
           ) : (
             <div className="flex gap-4 ">

@@ -17,18 +17,19 @@ export const signUp = createAsyncThunk(
       email,
       password,
     });
-
+    console.log("error: ", error);
     if (error) {
       throw new Error(error.message);
+    } else {
+      // if successful, we create a "profiles" table entry for the new user
+      const { data: profileData, error: profileError } = await supabase
+        .from("profiles")
+        .insert([{ user_id: data.user.id, role }])
+        .single()
+        .select("*");
+      console.log("Sign up profileData: ", profileData);
     }
 
-    // if successful, we create a "profiles" table entry for the new user
-    const { data: profileData, error: profileError } = await supabase
-      .from("profiles")
-      .insert([{ user_id: data.user.id, role }])
-      .single()
-      .select("*");
-    console.log("Sign up profileData: ", profileData);
     return data.user;
   }
 );
@@ -63,6 +64,7 @@ export const fetchUserData = createAsyncThunk(
   async () => {
     const { data, error } = await supabase.auth.getSession();
 
+    console.log("fetchUserData", data);
     if (error) {
       throw new Error(error.message);
     }

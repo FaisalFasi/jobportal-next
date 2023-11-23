@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut as logout } from "@/app/GlobalRedux/Features/auth/AuthSlice";
 import "@/app/globals.css";
-import { ToastContainer } from "react-toast";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const navbarLinks = [
   {
@@ -44,7 +45,6 @@ const Navbar = () => {
   const user = useSelector((state) => state?.auth?.user);
 
   const [isNavbarMenuOpen, setIsnavbarMenuOpen] = useState(false);
-
   const openNavbarMenu = () => {
     setIsnavbarMenuOpen(!isNavbarMenuOpen);
   };
@@ -53,6 +53,13 @@ const Navbar = () => {
     await dispatch(logout());
     navigate.push("/login");
   };
+  const handleRedirect = () => {
+    if (!isAuthenticated) {
+      navigate.push("/");
+    } else {
+      navigate.push("/dashboard");
+    }
+  };
 
   useEffect(() => {
     setIsnavbarMenuOpen(false);
@@ -60,10 +67,10 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className="fixed w-full flex justify-between  items-center top-0 px-4 py-8 theme-color font-bold text-md ">
+      <div className="fixed w-full flex justify-between  items-center top-0 px-4 py-8 navbar-bg font-bold text-md ">
         <div className="w-full flex justify-between items-center ">
           <div>
-            <h1>FR-Portal </h1>
+            <button onClick={handleRedirect}>FR-Portal </button>
           </div>
           {isAuthenticated && (
             <button
@@ -77,7 +84,7 @@ const Navbar = () => {
 
         {isAuthenticated ? (
           <ul
-            className={`absolute md:static w-screen md:w-full h-screen md:h-full theme-color  opacity-90  md:opacity-100 z-50 md:z-10 left-0 py-20 md:py-0  flex-col flex md:flex-row md:justify-end items-center gap-6 whitespace-nowrap  transition-all duration-300 transform text-xl md:text-base ${
+            className={`absolute md:static w-screen md:w-full h-screen md:h-full navbar-bg  opacity-90 md:opacity-100 z-50 md:z-10 left-0 py-20 md:py-0  flex-col flex md:flex-row md:justify-end items-center gap-6 whitespace-nowrap  transition-all duration-300 transform text-xl md:text-base ${
               isNavbarMenuOpen ? "top-0" : "top-[-1000px]"
             }  `}
           >
@@ -86,10 +93,12 @@ const Navbar = () => {
               return (
                 <li
                   key={link.id}
-                  className="hover:opacity-50"
+                  className={`hover:text-blue-300 `}
                   onClick={() => setIsnavbarMenuOpen(false)}
                 >
-                  <Link href={link.url}>{link.title}</Link>
+                  <Link href={link.url}>
+                    {navigate.pathname} {link.title}
+                  </Link>
                 </li>
               );
             })}
