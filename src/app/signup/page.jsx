@@ -1,12 +1,11 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import Button from "../../components/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../GlobalRedux/Features/auth/AuthSlice";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
-import { useState } from "react";
 const SignUp = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -15,46 +14,62 @@ const SignUp = () => {
   const [role, setRole] = useState("jobseeker");
   const { user } = useSelector((state) => state.auth);
 
-  // const notify = (text) => toast(text);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isValidEmail = useCallback((email) => emailRegex.test(email), []);
+  const isPasswordValid = useCallback(
+    (password) => password && password.length >= 7,
+    []
+  );
+
+  const handleSignUpError = () => {
+    toast.error(
+      "An unexpected error occurred during sign-up. Please check your email / password and try again"
+    );
+  };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
+    if (!isValidEmail(userEmail)) {
+      alert("Please enter a valid email");
+      return;
+    }
+
+    if (!isPasswordValid(password)) {
+      alert("Password must be at least 7 characters");
+      return;
+    }
+
     try {
-      const { data } = await dispatch(
+      const { data, error } = await dispatch(
         signUp({ email: userEmail, password, role })
       );
 
-      // If data is received, show success message
-      if (data) {
+      if (data && data.user) {
         console.log("data: ", data);
         toast.success("Please confirm your email");
+      } else {
+        handleSignUpError();
       }
     } catch (error) {
-      // If there's an error, show an error message
-      console.error("Error during sign-up:", error);
-      toast.error("An error occurred during sign-up. Please try again.");
+      console.error("Unexpected error:", error.message || error);
+      handleSignUpError();
     }
   };
 
   useEffect(() => {
-    console.log("user: ", user);
     if (user?.aud === "authenticated") {
       router.push("/login");
     }
   }, [user]);
-
-  // useEffect(() => {
-  //   console.log("role: ", role);
-  // }, [role]);
-
+  console.log("Signup ");
   return (
-    <div className="w-full flex justify-center ">
+    <div className="w-full flex justify-center">
       <div className="w-full md:w-[550px] px-4 md:border mt-8 mx-4">
         <div className="py-8">
           <h1 className="text-3xl font-bold text-center"> Sign Up</h1>
         </div>
-        <div className="mt-8 ">
+        <div className="mt-8">
           <form
             onSubmit={onSubmitHandler}
             className="flex flex-col gap-4 justify-center items-center w-full"
@@ -83,10 +98,8 @@ const SignUp = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="border w-full p-2"
             />
-            {/* radio group for role (jobseeker/recruiter) */}
-
-            <div className="flex  justify-center gap-8">
-              <div className=" flex justify-center gap-4">
+            <div className="flex justify-center gap-8">
+              <div className="flex justify-center gap-4">
                 <label htmlFor="jobseeker">Job Seeker</label>
                 <input
                   type="radio"
@@ -97,7 +110,7 @@ const SignUp = () => {
                   onChange={(e) => setRole(e.target.value)}
                 />
               </div>
-              <div className=" flex justify-center gap-4">
+              <div className="flex justify-center gap-4">
                 <label htmlFor="recruiter">Recruiter</label>
                 <input
                   type="radio"
@@ -109,11 +122,8 @@ const SignUp = () => {
                 />
               </div>
             </div>
-
             <div className="py-8">
-              <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
-                Sign Up
-              </button>
+              <Button type="submit" text={"Sign Up"} />
             </div>
           </form>
         </div>

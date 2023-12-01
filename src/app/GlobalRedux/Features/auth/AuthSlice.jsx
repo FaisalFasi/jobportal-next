@@ -9,44 +9,91 @@ const initialState = {
   loading: false,
   error: null,
 };
+// export const signUp = createAsyncThunk(
+//   "auth/signUp",
+//   async ({ email, password, role }) => {
+//     try {
+//       const { data, error } = await supabase.auth.signUp({
+//         email,
+//         password,
+//       });
+
+//       if (error) {
+//         return error;
+//       } else {
+//         const { data: profileData, error: profileError } = await supabase
+//           .from("profiles")
+//           .insert([{ user_id: data.user.id, role }])
+//           .single()
+//           .select("*");
+//         console.log("Sign up profileData: ", profileData);
+//       }
+
+//       return data.user;
+//     } catch (error) {
+//       console.log("Error in signup: ", error);
+//       throw new Error(error.message);
+//     }
+//   }
+// );
+
 export const signUp = createAsyncThunk(
-  // NEW USER
   "auth/signUp",
   async ({ email, password, role }) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-    console.log("error: ", error);
-    if (error) {
-      throw new Error(error.message);
-    } else {
-      // if successful, we create a "profiles" table entry for the new user
-      const { data: profileData, error: profileError } = await supabase
-        .from("profiles")
-        .insert([{ user_id: data.user.id, role }])
-        .single()
-        .select("*");
-      console.log("Sign up profileData: ", profileData);
-    }
+    try {
+      // Check if the email already exists
+      const { data: existingUser, error: emailError } =
+        await supabase.auth.api.getUserByEmail(email);
 
-    return data.user;
+      if (existingUser) {
+        throw new Error(
+          "Email already exists in the database. Please log in instead of signing up again or use a different email address to sign up."
+        );
+      }
+
+      // Proceed with user registration
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (error) {
+        return error;
+      } else {
+        // Create a "profiles" table entry for the new user
+        const { data: profileData, profileError } = await supabase
+          .from("profiles")
+          .insert([{ user_id: data.user.id, role }])
+          .single()
+          .select("*");
+        console.log("Sign up profileData: ", profileData);
+      }
+
+      return data.user;
+    } catch (error) {
+      return error.message;
+      // throw new Error(error.message);
+    }
   }
 );
+
 export const loginWithEmailPassword = createAsyncThunk(
   // EXISTING USER
   "auth/signInWithPassword",
   async ({ email, password }) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (error) {
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    } catch (error) {
       throw new Error(error.message);
     }
-
-    return data;
   }
 );
 
