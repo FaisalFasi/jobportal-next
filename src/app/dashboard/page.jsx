@@ -36,17 +36,17 @@ const Page = () => {
   return (
     <div>
       <div className="w-full min-h-screen p-8">
-        <Search />
+        {jobs?.length > 0 && <Search />}
 
         <div className="pt-4">
           <div>
             <h1 className="text-center font-bold text-2xl">
-              {isRecruiter ? "Your Jobs" : "All Jobs"}
+              {isRecruiter ? "Your Posted Jobs" : "All Jobs"}
             </h1>
           </div>
         </div>
         {isRecruiter ? (
-          <div>
+          <div className="h-full">
             {jobs?.filter((job) => job.status === "Draft").length > 0 ? (
               <div>
                 <h1 className="text-lg font-bold pt-8">Drafts</h1>

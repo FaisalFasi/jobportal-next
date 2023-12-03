@@ -21,12 +21,6 @@ const SignUp = () => {
     []
   );
 
-  const handleSignUpError = () => {
-    toast.error(
-      "An unexpected error occurred during sign-up. Please check your email / password and try again"
-    );
-  };
-
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
@@ -39,21 +33,19 @@ const SignUp = () => {
       alert("Password must be at least 7 characters");
       return;
     }
-
     try {
-      const { data, error } = await dispatch(
+      const response = await dispatch(
         signUp({ email: userEmail, password, role })
       );
+      const data = response.payload;
 
-      if (data && data.user) {
-        console.log("data: ", data);
-        toast.success("Please confirm your email");
-      } else {
-        handleSignUpError();
+      // If data is received, show success message
+      if (data) {
+        toast.success("Please confirm your email to login");
+        router.push("/login");
       }
     } catch (error) {
-      console.error("Unexpected error:", error.message || error);
-      handleSignUpError();
+      toast.error("An error occurred during sign-up. Please try again.");
     }
   };
 
@@ -62,7 +54,6 @@ const SignUp = () => {
       router.push("/login");
     }
   }, [user]);
-  console.log("Signup ");
   return (
     <div className="w-full flex justify-center">
       <div className="w-full md:w-[550px] px-4 md:border mt-8 mx-4">
