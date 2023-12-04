@@ -66,7 +66,6 @@ export const fetchUserData = createAsyncThunk(
   async () => {
     const { data, error } = await supabase.auth.getSession();
 
-    console.log("fetchUserData", data);
     if (error) {
       throw new Error(error.message);
     }

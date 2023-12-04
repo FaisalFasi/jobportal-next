@@ -3,8 +3,8 @@ import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchJobs, fetchMyJobs } from "../GlobalRedux/Features/jobs/JobsSlice";
 import { fetchMyProfile } from "../GlobalRedux/Features/profile/ProfileSlice";
-import Card from "@/components/Card/Card";
-import Search from "@/components/search/Search";
+import Card from "@/components/Card";
+import Search from "@/components/Search";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -45,6 +45,11 @@ const Page = () => {
             </h1>
           </div>
         </div>
+        {isRecruiter && jobs?.length === 0 && (
+          <div className="text-xl text-center mt-10 font-bold text-red-500">
+            !!! You have posted 0 jobs !!!
+          </div>
+        )}
         {isRecruiter ? (
           <div className="h-full">
             {jobs?.filter((job) => job.status === "Draft").length > 0 ? (

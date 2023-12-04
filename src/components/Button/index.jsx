@@ -23,17 +23,3 @@ const Button = ({ text, onClick, className }) => {
 };
 
 export default Button;
-
-// <Tooltip
-// className="bg-gray-200 px-1 rounded-lg"
-// effect="solid"
-// enterDelay={10} // Set a short delay for the tooltip to appear
-// leaveDelay={0}
-// placement={"top"}
-// // content={"Hover me"}
-// color="secondary"
-// >
-// <button data-tip data-for="example">
-//   Hover me
-// </button>
-// </Tooltip>

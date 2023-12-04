@@ -2,8 +2,8 @@
 import { useEffect } from "react";
 import { fetchJobs } from "./GlobalRedux/Features/jobs/JobsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Card from "@/components/Card/Card";
-import Search from "@/components/search/Search";
+import Card from "@/components/Card";
+import Search from "@/components/Search";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -19,7 +19,13 @@ export default function Home() {
 
   return (
     <main className="w-full min-h-screen p-8">
-      <Search />
+      {jobs.length > 0 ? (
+        <Search />
+      ) : (
+        <div className="text-2xl text-center mt-40 font-bold text-red-500">
+          !!! There is not any job posted yet !!!
+        </div>
+      )}
 
       <div>
         {jobs?.map((job, idx) => (

@@ -7,8 +7,10 @@ import {
   updateProfile,
 } from "../GlobalRedux/Features/profile/ProfileSlice";
 import { createJob } from "../GlobalRedux/Features/jobs/JobsSlice";
-import JobPostForm from "@/components/jobPostForm/JobPostForm";
+import JobPostForm from "@/components/JobPostForm";
 import "@/app/globals.css";
+import ProfessionalLinks from "@/components/ProfessionalLinks";
+import UpdateProfileForm from "@/components/UpdateProfileForm";
 
 const professionalLinks = [
   {
@@ -63,12 +65,15 @@ const Page = () => {
     asyncWrapper();
   }, [dispatch, loggedInUserId]);
 
-  const handleEdit = () => {
+  const handleEdit = (e) => {
+    e.preventDefault();
+
     setIsProfileEdited(!isProfileEdited);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       if (!loggedInUserId || !updateUserData) {
         console.error("loggedInUser or updateUserData is undefined.");
@@ -205,96 +210,14 @@ const Page = () => {
           </div>
         )}
       </div>
-      <div className=" h-full w-full flex justify-center items-center">
-        <div className=" profile-bg w-full md:w-1/2 h-1/2 m-4 p-4  flex flex-col items-start gap-10 rounded-md">
-          <div className=" w-full flex justify-between">
-            <h1 className="font-semibold text-xl">Professional Links</h1>
-            <button> Edit</button>
-          </div>
-          <div>
-            {professionalLinks.map((link, idx) => (
-              <div key={idx} className="pb-4">
-                <h2 className=" font-bold">{link.name} </h2>
-                <a href={link.link}>
-                  <p>{link.link}</p>
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <ProfessionalLinks professionalLinks={professionalLinks} />
       {isProfileEdited && (
-        <div className="w-screen h-screen fixed top-0 flex items-center justify-center bg-black z-50 bg-opacity-50  m-auto">
-          <div className="w-full md:w-1/2 popup-color rounded-md m-6 md:m-20 p-4 md:p-8">
-            <h1 className="text-2xl font-bold mb-4">User Profile Update</h1>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold mb-2">
-                  Name:
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  value={updateUserData.name}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border border-black text-black rounded-md"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold mb-2">
-                  Email:
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={updateUserData.email}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border border-black text-black rounded-md"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold mb-2">
-                  Phone:
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Phone"
-                  value={updateUserData.phone}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border border-black text-black rounded-md"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold mb-2">
-                  Address:
-                </label>
-                <input
-                  type="text"
-                  name="location"
-                  placeholder="location"
-                  value={updateUserData.location}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border border-black text-black rounded-md"
-                />
-              </div>
-              <div className="flex gap-4">
-                <button type="submit" className="btn-style">
-                  Update Profile
-                </button>
-                <button
-                  type="submit"
-                  className="btn-style"
-                  onClick={handleEdit}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+        <UpdateProfileForm
+          handleSubmit={handleSubmit}
+          handleInputChange={handleInputChange}
+          updateUserData={updateUserData}
+          handleEdit={handleEdit}
+        />
       )}
     </div>
   );

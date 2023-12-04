@@ -8,7 +8,7 @@ import {
 } from "@/app/GlobalRedux/Features/jobs/JobsSlice";
 
 import "@/app/globals.css";
-import Button from "../Button/Button";
+import Button from "../Button";
 const JobPostForm = ({ onClose, loggedInUserId, job }) => {
   const dispatch = useDispatch();
 

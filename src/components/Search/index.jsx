@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "@/components/Button/Button";
+import Button from "@/components/Button";
 import { useDispatch } from "react-redux";
 import { searchJobs } from "@/app/GlobalRedux/Features/jobs/JobsSlice";
 

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useCallback } from "react";
-import Button from "../../components/Button/Button";
+import Button from "../../components/Button";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { loginWithEmailPassword } from "../GlobalRedux/Features/auth/AuthSlice";

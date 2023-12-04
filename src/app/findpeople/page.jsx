@@ -8,7 +8,7 @@ import {
   fetchRecruiters,
 } from "../GlobalRedux/Features/profile/ProfileSlice";
 import "@/app/globals.css";
-import Button from "@/components/Button/Button";
+import Button from "@/components/Button";
 
 const Page = () => {
   const dispatch = useDispatch();

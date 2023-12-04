@@ -25,7 +25,6 @@ export const fetchMyProfile = createAsyncThunk(
       if (error) {
         throw new Error(error.message);
       }
-      console.log("data: ", data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -84,7 +83,6 @@ export const fetchRecruiters = createAsyncThunk(
         .select("*")
         .eq("role", "recruiter");
 
-      console.log("job seeker data: ", data);
       if (error) {
         throw new Error(error.message);
       }
@@ -108,7 +106,6 @@ export const ProfileSlice = createSlice({
         state.loading = false;
         state.profiles = action.payload;
         state.currentUser = action.payload;
-        console.log("state.currentUser: ", state.currentUser);
         state.error = null;
         // console.log("state: ", state.profiles);
       })
@@ -148,7 +145,6 @@ export const ProfileSlice = createSlice({
       })
       .addCase(fetchJobSeekers.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("action.payload: ", action.payload);
         state.profiles = action.payload;
         state.error = null;
       })

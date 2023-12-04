@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useCallback, useState } from "react";
-import Button from "../../components/Button/Button";
+import Button from "../../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../GlobalRedux/Features/auth/AuthSlice";
 import { useRouter } from "next/navigation";

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import Button from "../Button/Button";
+import Button from "../Button";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteJob } from "../../app/GlobalRedux/Features/jobs/JobsSlice";
-import JobPostForm from "../jobPostForm/JobPostForm";
+import JobPostForm from "../JobPostForm";
 
 const Card = ({ job, isRecruiter }) => {
   const dispatch = useDispatch();
