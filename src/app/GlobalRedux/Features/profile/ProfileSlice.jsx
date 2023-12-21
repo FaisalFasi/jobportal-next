@@ -37,13 +37,11 @@ export const updateProfile = createAsyncThunk(
 
   async (updateUserData) => {
     try {
-      //   console.log("updateUserData: ", updateUserData);
       const { data, error } = await supabase
         .from("profiles")
         .update(updateUserData)
         .eq("user_id", updateUserData.user_id);
 
-      //   console.log("updated profile data: " + data);
       if (error) {
         throw new Error(error.message);
       }

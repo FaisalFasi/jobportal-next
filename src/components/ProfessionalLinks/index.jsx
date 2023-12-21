@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "../Button";
 
-const ProfessionalLinks = ({ professionalLinks }) => {
+const ProfessionalLinks = ({ professionalLinks, handleInputChange }) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const handleEditting = () => {

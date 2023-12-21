@@ -41,6 +41,9 @@ const Page = () => {
     email: getUserProfile?.email || "",
     phone: getUserProfile?.phone || "",
     location: getUserProfile?.location || "",
+    linkedin: getUserProfile?.linkedin || "",
+    github: getUserProfile?.github || "",
+    personal_website: getUserProfile?.personal_website || "",
   });
 
   useEffect(() => {
@@ -50,6 +53,9 @@ const Page = () => {
       email: getUserProfile?.email || "",
       phone: getUserProfile?.phone || "",
       location: getUserProfile?.location || "",
+      linkedin: getUserProfile?.linkedin || "",
+      github: getUserProfile?.github || "",
+      personal_website: getUserProfile?.personal_website || "",
     });
   }, [loggedInUserId, getUserProfile]);
 
@@ -210,7 +216,10 @@ const Page = () => {
           </div>
         )}
       </div>
-      <ProfessionalLinks professionalLinks={professionalLinks} />
+      <ProfessionalLinks
+        handleInputChange={handleInputChange}
+        professionalLinks={professionalLinks}
+      />
       {isProfileEdited && (
         <UpdateProfileForm
           handleSubmit={handleSubmit}
